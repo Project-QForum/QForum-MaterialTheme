@@ -13,7 +13,7 @@ This theme needs to be used with [QForum-Core](https://github.com/JackuXL/QForum
 - Use Material Design language.
 - Use the lightweight CSS framework MDUI to load extremely fast.
 
-### Development progress
+### Development Progress
 
 - [x] Login
 - [x] Register
