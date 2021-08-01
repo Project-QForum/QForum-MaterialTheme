@@ -86,20 +86,23 @@
                 $.get("http://localhost:8080/register?" + params, function (data) {
                     console.log(JSON.stringify(data));
                     if (JSON.stringify(data).indexOf("code") !== -1) {
-                        switch (data["msg"]){
-                            case "success":
-                                alert("注册成功");
-                                break;
-                            case "username is taken":
-                                alert("用户名已被占用");
-                                break;
-                            case "email is taken":
-                                alert("邮箱已被占用");
-                                break;
-                            default:
-                                alert("登录失败");
-                                break;
+                        if(data["code"]===200){
+                            alert("登录成功");
                         }
+                        else{
+                            switch (data["error"]){
+                                case "username_is_taken":
+                                    alert("用户名已被占用");
+                                    break;
+                                case "email_is_taken":
+                                    alert("邮箱已被占用");
+                                    break;
+                                default:
+                                    alert("登录失败");
+                                    break;
+                            }
+                        }
+
                     }
 
                 });

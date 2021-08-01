@@ -81,19 +81,21 @@
                 $.get("http://localhost:8080/login?" + params, function (data) {
                     console.log(JSON.stringify(data));
                     if (JSON.stringify(data).indexOf("code") !== -1) {
-                        switch (data["code"]){
-                            case 200:
-                                alert("登录成功");
-                                break;
-                            case 403:
-                                alert("密码错误");
-                                break;
-                            case 404:
-                                alert("用户不存在");
-                                break;
-                            default:
-                                alert("登录失败");
-                                break;
+                        if(data["code"]===200){
+                            alert("登录成功");
+                        }
+                        else{
+                            switch (data["error"]){
+                                case "password_mismatch":
+                                    alert("密码错误");
+                                    break;
+                                case "no_such_user":
+                                    alert("用户不存在");
+                                    break;
+                                default:
+                                    alert("登录失败");
+                                    break;
+                            }
                         }
                     }
 
