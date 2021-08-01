@@ -2,7 +2,7 @@
 
 ◀[返回到 QForum 项目索引](https://github.com/JackuXL/QForum)
 
-🌏简体中文 | [English](https://github.com/JackuXL/QForum-MaterialTheme/blob/main/README_EN.md)
+🌏简体中文 | [English](https://github.com/JackuXL/QForum-MaterialTheme/blob/master/README_EN.md)
 
 QForum-MaterialTheme 是 [QForum](https://github.com/JackuXL/QForum) 的官方前端主题。
 
