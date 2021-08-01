@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Title</title>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"
+            integrity="sha384-cLRrMq39HOZdvE0j6yBojO4+1PrHfB7a9l5qLcmRm/fiWXYY+CndJPmyu5FV/9Tw"
+            crossorigin="anonymous"
+    />
+</head>
+<body class="mdui-theme-accent-blue">
+    <div class="mdui-toolbar">
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+        <span class="mdui-typo-title">QForum</span>
+        <div class="mdui-toolbar-spacer"></div>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">refresh</i></a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">more_vert</i></a>
+    </div>
+
+    <div class="mdui-card mdui-shadow-4 mdui-p-a-3" style="overflow-y:hidden;">
+        <div class="mdui-dialog-title">注册</div>
+        <form id="login-form">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label" for="userName">用户名</label>
+                <input class="mdui-textfield-input" id="userName" required />
+                <div class="mdui-textfield-error">用户名不能为空</div>
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label" for="email">邮箱</label>
+                <input class="mdui-textfield-input" id="email" type="email" required />
+                <div class="mdui-textfield-error">邮箱格式错误</div>
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label" for="password">密码</label>
+                <input class="mdui-textfield-input" id="password" type="password" required />
+                <div class="mdui-textfield-error">密码不能为空</div>
+            </div>
+            <div class="actions">
+                <label class="more-options mdui-float-left mdui-m-t-1" mdui-menu="{target: '#mc-login-menu', position: 'top', covered: true}">
+                    更多选项 <i class="mdui-icon material-icons mdui-text-color-theme-icon" style="margin-top: -3px">arrow_drop_down</i>
+                </label>
+                <ul class="mdui-menu" id="mc-login-menu">
+                    <li class="mdui-menu-item"><a class="mdui-ripple">忘记密码</a></li>
+                    <li class="mdui-menu-item"><a class="mdui-ripple" href="/login">登录</a></li>
+                </ul>
+                <button id="btn_login" class="mdui-btn mdui-btn-raised mdui-text-color-white mdui-color-blue mdui-float-right">注册</button>
+            </div>
+        </form>
+    </div>
+
+    <script
+            src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
+            integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="/js/md5.js"></script>
+    <style>
+        .mdui-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 88%;
+            max-width: 340px;
+            max-height: 90%;
+            transform: translate(-50%, -50%);
+            overflow: auto;
+            border-radius: 8px;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $("#login-form").submit(function () {
+                let params = {};
+                params.userName=$("#userName").val();
+                params.password=$("#password").val();
+                params.email=$("#email").val();
+                params = $.param(params);
+                $.get("http://localhost:8080/register?" + params, function (data) {
+                    console.log(JSON.stringify(data));
+                    if (JSON.stringify(data).indexOf("code") !== -1) {
+                        switch (data["msg"]){
+                            case "success":
+                                alert("注册成功");
+                                break;
+                            case "username is taken":
+                                alert("用户名已被占用");
+                                break;
+                            case "email is taken":
+                                alert("邮箱已被占用");
+                                break;
+                            default:
+                                alert("登录失败");
+                                break;
+                        }
+                    }
+
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
