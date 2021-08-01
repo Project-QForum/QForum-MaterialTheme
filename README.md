@@ -10,9 +10,8 @@ QForum-MaterialTheme 是 [QForum](https://github.com/JackuXL/QForum) 的官方�
 
 ### 特点
 
-使用 Material Design 设计语言
-
-使用轻量级 CSS 框架 MDUI，极速加载。
+- 使用 Material Design 设计语言。
+- 使用轻量级 CSS 框架 MDUI，极速加载。
 
 ### 开发进度
 
