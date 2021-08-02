@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Title</title>
+    <title>注册</title>
     <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"
@@ -80,25 +80,26 @@
             $("#login-form").submit(function () {
                 let params = {};
                 params.userName=$("#userName").val();
-                params.password=$("#password").val();
                 params.email=$("#email").val();
+                params.password=$.md5($("#password").val());
+                params.md5 = true;
                 params = $.param(params);
                 $.get("http://localhost:8080/register?" + params, function (data) {
                     console.log(JSON.stringify(data));
                     if (JSON.stringify(data).indexOf("code") !== -1) {
                         if(data["code"]===200){
-                            alert("登录成功");
+                            alert("注册成功");
                         }
                         else{
                             switch (data["error"]){
-                                case "username_is_taken":
+                                case "username_already_exists":
                                     alert("用户名已被占用");
                                     break;
-                                case "email_is_taken":
+                                case "email_already_exists":
                                     alert("邮箱已被占用");
                                     break;
                                 default:
-                                    alert("登录失败");
+                                    alert("注册失败");
                                     break;
                             }
                         }

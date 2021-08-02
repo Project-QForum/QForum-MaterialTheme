@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Title</title>
+    <title>登录</title>
     <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"
@@ -76,7 +76,8 @@
             $("#login-form").submit(function () {
                 let params = {};
                 params.userName=$("#userName").val();
-                params.password=$("#password").val();
+                params.password=$.md5($("#password").val());
+                params.md5 = true;
                 params = $.param(params);
                 $.get("http://localhost:8080/login?" + params, function (data) {
                     console.log(JSON.stringify(data));
