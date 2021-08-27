@@ -20,7 +20,7 @@
 
 <div class="mdui-card mdui-shadow-4 mdui-p-a-3" style="overflow-y:hidden;">
     <div class="mdui-dialog-title">注册</div>
-    <form id="login-form">
+    <form id="register-form">
         <div class="mdui-textfield mdui-textfield-floating-label">
             <label class="mdui-textfield-label" for="userName">用户名</label>
             <input class="mdui-textfield-input" id="userName" required/>
@@ -57,7 +57,9 @@
         crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="/js/md5.js"></script>
+<script src="../js/md5.js"></script>
+<script src="../api/main.js"></script>
+<script src="../api/user.js"></script>
 <style>
     .mdui-card {
         position: absolute;
@@ -83,35 +85,15 @@
                 $("#main").attr("href", "../");
             }
         });
-        $("#login-form").submit(function () {
+        $("#register-form").submit(function (e) {
+            e.preventDefault();
             let params = {};
             params.userName = $("#userName").val();
             params.email = $("#email").val();
             params.password = $.md5($("#password").val());
             params.md5 = true;
             params = $.param(params);
-            $.get("http://localhost:8080/user/register?" + params, function (data) {
-                console.log(JSON.stringify(data));
-                if (JSON.stringify(data).indexOf("code") !== -1) {
-                    if (data["code"] === 200) {
-                        alert("注册成功");
-                    } else {
-                        switch (data["error"]) {
-                            case "username_already_exists":
-                                alert("用户名已被占用");
-                                break;
-                            case "email_already_exists":
-                                alert("邮箱已被占用");
-                                break;
-                            default:
-                                alert("注册失败");
-                                break;
-                        }
-                    }
-
-                }
-
-            });
+            register(params);
             return false;
         });
     });

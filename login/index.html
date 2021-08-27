@@ -54,7 +54,9 @@
         crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="/js/md5.js"></script>
+<script src="../js/md5.js"></script>
+<script src="../api/main.js"></script>
+<script src="../api/user.js"></script>
 <style>
     .mdui-card {
         position: absolute;
@@ -80,34 +82,14 @@
                 $("#main").attr("href", "../");
             }
         });
-        $("#login-form").submit(function () {
+        $("#login-form").submit(function (e) {
+            e.preventDefault();
             let params = {};
             params.userName = $("#userName").val();
             params.password = $.md5($("#password").val());
             params.md5 = true;
             params = $.param(params);
-            $.get("https://api.wearbbs.cn/user/login?" + params, function (data) {
-                console.log(JSON.stringify(data));
-                if (JSON.stringify(data).indexOf("code") !== -1) {
-                    if (data["code"] === 200) {
-                        mdui.snackbar("登录成功");
-                    } else {
-                        switch (data["error"]) {
-                            case "password_mismatch":
-                                mdui.snackbar("密码错误");
-                                break;
-                            case "no_such_user":
-                                mdui.snackbar("用户不存在");
-                                break;
-                            default:
-                                mdui.snackbar("登录失败");
-                                break;
-                        }
-                    }
-                }
-
-            });
-            return false;
+            login(params);
         });
     });
 </script>
