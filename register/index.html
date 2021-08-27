@@ -93,7 +93,7 @@
             params.password = $.md5($("#password").val());
             params.md5 = true;
             params = $.param(params);
-            register(params);
+            register(params,"../login");
             return false;
         });
     });

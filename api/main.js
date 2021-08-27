@@ -1,9 +1,10 @@
 BASE_URL = "https://api.wearbbs.cn/user";
-function sendGet(path,params){
+function sendGet(path,params,next){
     let result = undefined;
     $.get(BASE_URL + path + "?" + params, function (data) {
         if (JSON.stringify(data).indexOf("code") !== -1) {
-            result =  "登录成功";
+            result =  "成功";
+            location.href = next;
         }
         else{
             result =  "未知错误";

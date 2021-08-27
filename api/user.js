@@ -1,6 +1,6 @@
-function register(params){
-    sendGet("/register",params);
+function register(params,next){
+    sendGet("/register",params,next);
 }
-function login(params){
-    sendGet("/login",params);
+function login(params,next){
+    sendGet("/login",params,next);
 }
