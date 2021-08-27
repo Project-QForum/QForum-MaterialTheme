@@ -16,8 +16,8 @@
     />
 
     <!-- Title -->
-    <title>首页 | QForum</title>
-    <link rel="shortcut icon" href="./img/favicon.png">
+    <title>QForum - 首页</title>
+    <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body class="mdui-theme-primary-blue mdui-theme-accent-blue mdui-drawer-body-left mdui-appbar-with-toolbar">
 
@@ -26,7 +26,7 @@
 <div id="drawer"></div>
 
 <div class="mdui-container mdui-typo" style="height:350px">
-    <h1 class="mdui-text-color-theme" style="font-size: xxx-large">网站搭建中...</h1>
+    <h1 class="mdui-text-color-theme" style="font-size: xxx-large">404</h1>
     <h3>您请求的页面不存在</h3>
 </div>
 
@@ -40,16 +40,8 @@
 
 <script>
     $(document).ready(function () {
-        $("#appbar").load("./common/appbar.html", function (responseTxt, statusTxt) {
-            if (statusTxt === "success") {
-                $("#title").text("首页");
-            }
-        });
-        $("#drawer").load("./common/drawer.html", function (responseTxt, statusTxt) {
-            if (statusTxt === "success") {
-                $("#main").href = "#";
-            }
-        });
+        $("#appbar").load("./common/appbar.html");
+        $("#drawer").load("./common/drawer.html");
     });
 </script>
 </body>

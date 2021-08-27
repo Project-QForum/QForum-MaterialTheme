@@ -16,18 +16,20 @@
     />
 
     <!-- Title -->
-    <title>首页 | QForum</title>
-    <link rel="shortcut icon" href="./img/favicon.png">
+    <title>QForum - 首页</title>
+    <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body class="mdui-theme-primary-blue mdui-theme-accent-blue mdui-drawer-body-left mdui-appbar-with-toolbar">
 
 
-<div id="appbar"></div>
+<div id="header"></div>
 <div id="drawer"></div>
 
-<div class="mdui-container mdui-typo" style="height:350px">
-    <h1 class="mdui-text-color-theme" style="font-size: xxx-large">网站搭建中...</h1>
-    <h3>您请求的页面不存在</h3>
+<div class="index text-center text-black" style="height:350px">
+    <div class="mdui-typo mdui-text-center mdui-text-color-black" style="padding:50px 0px 0px 0px;">
+        <div class="mdui-typo-headline"><img src="https://z3.ax1x.com/2021/08/24/hk9hX6.png" height="128px"></div>
+
+    </div>
 </div>
 
 <!-- MDUI JavaScript -->
@@ -37,20 +39,12 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-
 <script>
     $(document).ready(function () {
-        $("#appbar").load("./common/appbar.html", function (responseTxt, statusTxt) {
-            if (statusTxt === "success") {
-                $("#title").text("首页");
-            }
-        });
-        $("#drawer").load("./common/drawer.html", function (responseTxt, statusTxt) {
-            if (statusTxt === "success") {
-                $("#main").href = "#";
-            }
-        });
+        $("#header").load("./common/appbar.html");
+        $("#drawer").load("./common/drawer.html");
     });
 </script>
+
 </body>
 </html>

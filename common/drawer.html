@@ -1,0 +1,51 @@
+<div class="mdui-drawer" id="left-drawer">
+    <ul class="mdui-list">
+        <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-m-x-2 mdui-m-y-1"
+                style="width: 90%;"><i
+                class="mdui-list-item-icon mdui-icon material-icons">edit</i> 发布主题
+        </button>
+        <a id="main" class="mdui-list-item mdui-ripple">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-theme-accent">home</i>
+            <div class="mdui-list-item-content">首页</div>
+        </a>
+        <div class="mdui-collapse" mdui-collapse>
+            <div class="mdui-collapse-item ">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-theme-accent">question_answer</i>
+                    <div class="mdui-list-item-content">论坛</div>
+                    <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                </div>
+                <div class="mdui-collapse-item-body mdui-list">
+                    <a class="mdui-list-item mdui-ripple" mdui-tooltip="{content: '说明'}"
+                       mdui-dialog="{target: '#communicate'}">
+                        <div class="mdui-list-item-content">1</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mdui-collapse" mdui-collapse>
+            <div class="mdui-collapse-item ">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-theme-accent">apps</i>
+                    <div class="mdui-list-item-content">应用</div>
+                    <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                </div>
+                <div class="mdui-collapse-item-body mdui-list">
+                    <a class="mdui-list-item mdui-ripple" mdui-tooltip="{content: '说明'}"
+                       mdui-dialog="{target: '#lenrome_rclone_api'}">
+                        <div class="mdui-list-item-content">1</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a class="mdui-list-item mdui-ripple" mdui-dialog="{target: '#about'}">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-theme-accent">info</i>
+            <div class="mdui-list-item-content">关于</div>
+        </a>
+    </ul>
+</div>
+<script
+        src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
+        integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
+        crossorigin="anonymous">
+</script>
