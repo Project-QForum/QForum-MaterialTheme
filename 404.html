@@ -17,32 +17,44 @@
 
     <!-- Title -->
     <title>QForum - 首页</title>
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="./img/favicon.png">
 </head>
 <body class="mdui-theme-primary-blue mdui-theme-accent-blue mdui-drawer-body-left mdui-appbar-with-toolbar">
 
 
-<div id="appbar"></div>
-<div id="drawer"></div>
+    <div id="appbar"></div>
+    <div id="drawer"></div>
 
-<div class="mdui-container mdui-typo" style="height:350px">
-    <h1 class="mdui-text-color-theme" style="font-size: xxx-large">404</h1>
-    <h3>您请求的页面不存在</h3>
-</div>
+    <div class="mdui-container mdui-typo" style="height:350px">
+        <h1 class="mdui-text-color-theme" style="font-size: xxx-large">404</h1>
+        <h3>您请求的页面不存在</h3>
+    </div>
 
-<!-- MDUI JavaScript -->
-<script
-        src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
-        integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
-        crossorigin="anonymous"
-></script>
-<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $("#appbar").load("./common/appbar.html");
-        $("#drawer").load("./common/drawer.html");
-    });
-</script>
+    <!-- MDUI JavaScript -->
+    <script
+            src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
+            integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/util/NetWorkUtil.js"></script>
+    <script>
+        $("#appbar").load("../common/appbar.html", function (responseTxt, statusTxt) {
+            if (statusTxt === "success") {
+                $("#title").text("错误");
+            }
+        });
+        $("#drawer").load("../common/drawer.html", function (responseTxt, statusTxt) {
+            if (statusTxt === "success") {
+                $("#main").attr("href","../");
+            }
+        });
+        $(function () {
+            let msg = getQueryStringByName("msg");
+            if(msg){
+                mdui.snackbar(msg);
+            }
+        });
+    </script>
 </body>
 </html>

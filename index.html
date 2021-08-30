@@ -24,11 +24,13 @@
 
 <div id="appbar"></div>
 <div id="drawer"></div>
-
+<div id="boards" style="margin-top: 20px"></div>
 <div class="mdui-container mdui-typo" style="height:350px">
-    <h1 class="mdui-text-color-theme" style="font-size: xxx-large">网站搭建中...</h1>
-    <h3>您请求的页面不存在</h3>
+    <h1 id="loading" class="mdui-text-color-theme" style="font-size: xxx-large">加载中...</h1>
 </div>
+
+
+
 
 <!-- MDUI JavaScript -->
 <script
@@ -37,18 +39,50 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-
+<script src="js/App.js"></script>
+<script src="js/api/Board.js"></script>
+<script src="js/util/NetWorkUtil.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#appbar").load("./common/appbar.html", function (responseTxt, statusTxt) {
-            if (statusTxt === "success") {
-                $("#title").text("首页");
+    $("#appbar").load("./common/appbar.html", function (responseTxt, statusTxt) {
+        if (statusTxt === "success") {
+            $("#title").text("首页");
+        }
+    });
+    $("#drawer").load("./common/drawer.html", function (responseTxt, statusTxt) {
+        if (statusTxt === "success") {
+            $("#main").attr("href","#");
+        }
+    });
+    $(function () {
+        let msg = getQueryStringByName("msg");
+        if(msg){
+            mdui.snackbar(msg);
+        }
+        listBoard("",function (data) {
+            $("#loading").hide();
+            let item = [
+                '<div class="mdui-col-sm-6 mdui-col-md-4">',
+                '<div class="mdui-card">',
+                '<div class="mdui-card-media">',
+                '<img src="https://cdn.w3cbus.com/mdui.org/docs/assets/docs/img/card.jpg"  alt="cover"/>',
+                '<div class="mdui-card-media-covered mdui-card-media-covered-gradient">',
+                '<div class="mdui-card-primary">',
+                '<div class="mdui-card-primary-title">Title</div>',
+                '<div class="mdui-card-primary-subtitle">Subtitle</div>',
+                '</div>',
+                '</div>',
+                '</div>',
+                '<div class="mdui-card-actions">',
+                '<button class="mdui-btn mdui-ripple">进入板块</button>',
+                '</div>',
+                '</div>',
+                '</div>'
+            ].join("\n");
+            for(let i = 0;i<data["size"];i++){
+                $("#boards").append(item.replace("Title",data["boardList"][i]["name"]).replace("Subtitle",data["boardList"][i]["description"]));
             }
-        });
-        $("#drawer").load("./common/drawer.html", function (responseTxt, statusTxt) {
-            if (statusTxt === "success") {
-                $("#main").href = "#";
-            }
+        },function () {
+            mdui.snackbar("加载失败");
         });
     });
 </script>

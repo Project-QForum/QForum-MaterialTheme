@@ -1,7 +1,7 @@
 <div class="mdui-drawer" id="left-drawer">
     <ul class="mdui-list">
         <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-m-x-2 mdui-m-y-1"
-                style="width: 90%;"><i
+                style="width: 90%;" onclick="onPostThreadButtonClick()"><i
                 class="mdui-list-item-icon mdui-icon material-icons">edit</i> 发布主题
         </button>
         <a id="main" class="mdui-list-item mdui-ripple">
@@ -48,4 +48,17 @@
         src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
         integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
         crossorigin="anonymous">
+</script>
+<script>
+    function isLogin() {
+        return getCookie("sessionId")!=null;
+    }
+
+    function onPostThreadButtonClick() {
+        if (isLogin()) {
+            location.href = "/thread/post";
+        } else {
+            location.href = "/user/login"
+        }
+    }
 </script>

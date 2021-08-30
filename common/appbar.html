@@ -2,8 +2,8 @@
 <div class="mdui-appbar mdui-appbar-fixed mdui-color-white">
     <div class="mdui-toolbar">
         <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer'}"><i class="mdui-icon material-icons">menu</i></a>
-        <a href="../" class="mdui-typo-headline mdui-hidden-xs">QForum</a>
-        <a id="title" href="./" class="mdui-typo-title"></a>
+        <a href="/" class="mdui-typo-headline mdui-hidden-xs">QForum</a>
+        <a id="title" href="#" class="mdui-typo-title"></a>
         <div class="mdui-toolbar-spacer"></div>
         <div class="mdui-textfield mdui-textfield-expandable mdui-float-right">
             <button class="mdui-textfield-icon mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i>
@@ -16,20 +16,29 @@
         </div>
         <a onclick="location.reload();" class="mdui-btn mdui-btn-icon"><i
                 class="mdui-icon material-icons">refresh</i></a>
-        <a onclick="onAccountButtonClick()" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">account_circle</i></a>
+        <div id="account" class="mdui-chip" onclick="onAccountButtonClick();">
+            <span class="mdui-chip-icon mdui-m-b-4"><i class="mdui-icon material-icons">account_circle</i></span>
+            <span id="account_name" class="mdui-chip-title mdui-m-b-4">未登录</span>
+        </div>
+
         <a class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">more_vert</i></a>
     </div>
     <script>
-        function checkLogin() {
-            // TODO:检查登录
-            return false;
+        $(document).ready(function () {
+            if(isLogin()){
+                $("#account_name").text(getCookie("userName"));
+            }
+            console.log(isLogin());
+        });
+        function isLogin() {
+            return getCookie("sessionId")!=null;
         }
 
         function onAccountButtonClick() {
-            if (checkLogin()) {
-                location.href = "../user";
+            if (isLogin()) {
+                location.href = "/user";
             } else {
-                location.href = "../login"
+                location.href = "/user/login"
             }
         }
     </script>
