@@ -2,7 +2,7 @@
 
 ◀[Back to the index of the QForum project](https://github.com/JackuXL/QForum)
 
-🌏[简体中文](https://github.com/JackuXL/QForum-MaterialTheme/blob/master/README.md) | English
+🌏English | [简体中文](https://github.com/JackuXL/QForum-MaterialTheme/blob/master/README.zh-CN.md)
 
 QForum-MaterialTheme is the Official Front-end Theme of  [QForum](https://github.com/JackuXL/QForum).
 
