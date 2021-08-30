@@ -1,20 +1,20 @@
 # QForum-MaterialTheme
 
-◀[返回到 QForum 项目索引](https://github.com/JackuXL/QForum)
+◀[Back to the index of the QForum project](https://github.com/JackuXL/QForum)
 
-🌏简体中文 | [English](https://github.com/JackuXL/QForum-MaterialTheme/blob/master/README_EN.md)
+🌏English | [简体中文](https://github.com/JackuXL/QForum-MaterialTheme/blob/master/README.zh-CN.md)
 
-QForum-MaterialTheme 是 [QForum](https://github.com/JackuXL/QForum) 的官方前端主题。
+QForum-MaterialTheme is the Official Front-end Theme of  [QForum](https://github.com/JackuXL/QForum).
 
-本主题需要配合 [QForum-Core](https://github.com/JackuXL/QForum-Core) 使用。
+This theme needs to be used with [QForum-Core](https://github.com/JackuXL/QForum-Core).
 
-### 特点
+### Features
 
-- 使用 Material Design 设计语言。
-- 使用轻量级 CSS 框架 MDUI，极速加载。
+- Use Material Design language.
+- Use the lightweight CSS framework MDUI to load extremely fast.
 
-### 开发进度
+### Development Progress
 
-- [x] 登录
-- [x] 注册
-- [ ] 其他论坛功能
+- [x] Login
+- [x] Register
+- [ ] Other forum features
