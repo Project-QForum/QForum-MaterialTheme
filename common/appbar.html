@@ -28,7 +28,6 @@
             if(isLogin()){
                 $("#account_name").text(getCookie("userName"));
             }
-            console.log(isLogin());
         });
         function isLogin() {
             return getCookie("sessionId")!=null;
