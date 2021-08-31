@@ -73,13 +73,13 @@
                 '</div>',
                 '</div>',
                 '<div class="mdui-card-actions">',
-                '<button class="mdui-btn mdui-ripple">进入板块</button>',
+                '<button class="mdui-btn mdui-ripple" onclick="Link">进入板块</button>',
                 '</div>',
                 '</div>',
                 '</div>'
             ].join("\n");
             for(let i = 0;i<data["size"];i++){
-                $("#boards").append(item.replace("Title",data["boardList"][i]["name"]).replace("Subtitle",data["boardList"][i]["description"]));
+                $("#boards").append(item.replace("Title",data["boardList"][i]["name"]).replace("Subtitle",data["boardList"][i]["description"]).replace("Link","javascrtpt:window.location.href='./board/?boardId=" + data["boardList"][i]["id"] + "'"));
             }
         },function () {
             mdui.snackbar("加载失败");

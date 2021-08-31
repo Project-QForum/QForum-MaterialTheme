@@ -89,6 +89,8 @@ function analysisError(error){
             return "密码错误";
         case "bad_parameter":
             return "表单不完整";
+        case "title_cannot_be_empty":
+            return "标题不能为空";
         default:
             return "未知错误";
     }

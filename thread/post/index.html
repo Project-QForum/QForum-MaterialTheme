@@ -16,7 +16,7 @@
     />
 
     <!-- Title -->
-    <title>发布主题 | QForum</title>
+    <title>发布帖子 | QForum</title>
     <link rel="shortcut icon" href="../../img/favicon.png">
     <link rel="stylesheet" href="../../editor.md/css/editormd.css"/>
 </head>
@@ -53,7 +53,7 @@
         }
         $("#appbar").load("../../common/appbar.html", function (responseTxt, statusTxt) {
             if (statusTxt === "success") {
-                $("#title").text("发布主题");
+                $("#title").text("发布帖子");
             }
         });
         $("#drawer").load("../../common/drawer.html", function (responseTxt, statusTxt) {
@@ -81,11 +81,11 @@
             params.sessionId = getCookie("sessionId");
             params.title = $("#thread_title").val();
             params.type = 0;
-            params.boardId = 1;
+            params.boardId = getQueryStringByName("boardId");
             params.content = editor.getHTML();
             params = $.param(params);
-            postThread(params,function () {
-                location.href = "../../?msg=发布成功";
+            postThread(params,function (data) {
+                location.href = "../?id="+data["id"]+"&msg=发布成功";
             },function (data) {
                 mdui.snackbar(analysisError(data["error"]));
             });
