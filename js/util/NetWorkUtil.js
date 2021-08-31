@@ -21,14 +21,11 @@ function setCookie(name,value)
 function getCookie(name)
 {
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-    if(arr = document.cookie.match(reg)) return unescape(arr[2]);
+    if(arr = document.cookie.match(reg)) return unescape(arr[2])==="null"?null:unescape(arr[2]);
     else return null;
 }
 //删除cookies
 function delCookie(name)
 {
-    var exp = new Date();
-    exp.setTime(exp.getTime() - 1);
-    var cval=getCookie(name);
-    if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    setCookie(name,"null");
 }

@@ -24,7 +24,7 @@
 
 <div id="appbar"></div>
 <div id="drawer"></div>
-<div id="boards" style="margin-top: 20px"></div>
+<div id="boards"></div>
 <div class="mdui-container mdui-typo" style="height:350px">
     <h1 id="loading" class="mdui-text-color-theme" style="font-size: xxx-large">加载中...</h1>
 </div>
@@ -41,6 +41,7 @@
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script src="js/App.js"></script>
 <script src="js/api/Board.js"></script>
+<script src="js/api/User.js"></script>
 <script src="js/util/NetWorkUtil.js"></script>
 <script>
     $("#appbar").load("./common/appbar.html", function (responseTxt, statusTxt) {
@@ -61,7 +62,7 @@
         listBoard("",function (data) {
             $("#loading").hide();
             let item = [
-                '<div class="mdui-col-sm-6 mdui-col-md-4">',
+                '<div class="mdui-col-sm-6 mdui-col-md-4" style="margin-top: 20px">',
                 '<div class="mdui-card">',
                 '<div class="mdui-card-media">',
                 '<img src="./img/card.jpg"  alt="cover"/>',
@@ -84,6 +85,16 @@
         },function () {
             mdui.snackbar("加载失败");
         });
+
+        if(getCookie("sessionId")!=null){
+            checkLogin("sessionId="+getCookie("sessionId"),function(){},function () {
+                delCookie("sessionId");
+                mdui.snackbar("登录失效");
+            });
+        }
+        else if(getCookie("userName")!=null){
+            delCookie("userName");
+        }
     });
 </script>
 </body>
