@@ -13,6 +13,7 @@
             integrity="sha384-cLRrMq39HOZdvE0j6yBojO4+1PrHfB7a9l5qLcmRm/fiWXYY+CndJPmyu5FV/9Tw"
             crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="mdui-theme-primary-blue mdui-theme-accent-blue mdui-drawer-body-left mdui-appbar-with-toolbar">
 <div id="drawer"></div>
@@ -45,6 +46,17 @@
             </div>
         </div>
     </div>
+    <div id="comments_box" class="mdui-card mdui-card-shadow question" style="margin-top: 20px">
+        <div style="font-size: x-large;margin-top: 20px;margin-bottom: 20px">
+            评论
+        </div>
+
+        <div id="comments"></div>
+        <div id="new_comment" class="mdui-textfield new-comment" style="margin-left: -25px;margin-right: -25px;padding-bottom: 0">
+            <input id="input_comment" class="mdui-textfield-input" type="text" placeholder="发一条友善的评论" style="width: 95%"/>
+            <button id="btn_submit" onclick="commit()" class="mdui-btn mdui-btn-raised mdui-color-theme-600" style="width: 5%;margin-left: 20px">发布</button>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -73,6 +85,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="../js/util/NetWorkUtil.js"></script>
 <script src="../js/api/Thread.js"></script>
+<script src="../js/api/Comment.js"></script>
 <script src="../js/App.js"></script>
 <script>
     $("#appbar").load("../../common/appbar.html", function (responseTxt, statusTxt) {
@@ -85,7 +98,18 @@
             $("#main").attr("href","../");
         }
     });
-
+    function commit() {
+        let params = {};
+        params.sessionId = getCookie("sessionId");
+        params.threadId = getQueryStringByName("id");
+        params.content = $("#input_comment").val();
+        params = $.param(params);
+        postComment(params,function () {
+            mdui.snackbar("发送成功，请刷新")
+        },function (data) {
+            mdui.snackbar(analysisError(data["error"]));
+        });
+    }
     $(function () {
         let msg = getQueryStringByName("msg");
         if (msg) {
@@ -106,7 +130,38 @@
             $("#thread_publisher_userName").text("加载失败");
             mdui.snackbar(analysisError(data["error"]));
         });
+        if(!isLogin()){
+            $("#new_comment").hide()
+        }
+        $("#comments").append('<p id="loading_comments" class="hint">加载中...</p>');
+        listComments("threadId="+getQueryStringByName("id"),function (data) {
+            let item = [
+                '<li class="mdui-list-item mdui-ripple">',
+                '<div class="mdui-list-item-avatar"><i class="mdui-icon material-icons">account_circle</i></div>',
+                '<div class="mdui-list-item-content">',
+                '<div class="mdui-list-item-title">%title%</div>',
+                '<div class="mdui-list-item-text">%subtitle%</div>',
+                '</div>',
+                '</li>',
+            ].join("\n");
+            if(data["size"]<=0){
+                $("#comments").append('<p class="hint">什么都没有哦</p>');
+            }
+            else{
+                for(let i = 0;i<data["size"];i++){
+                    $("#comments").append(item.replace("%title%",data["threadList"][i]["publisher"]["userName"]).replace("%subtitle%",data["threadList"][i]["content"]));
+                    if(i!==data["size"]-1){
+                        $("#comments").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
+                    }
+                }
+            }
+            $("#loading_comments").hide()
+
+        },function () {
+            mdui.snackbar("加载失败");
+        });
     });
+
 </script>
 </body>
 </html>

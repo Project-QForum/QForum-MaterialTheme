@@ -1,0 +1,10 @@
+.hint{
+    color:darkgrey;
+}
+.new-comment{
+    box-shadow: 0 -1px 3px rgb(26 26 26 / 10%);
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+
+}

@@ -95,3 +95,6 @@ function analysisError(error){
             return "未知错误";
     }
 }
+function isLogin() {
+    return getCookie("sessionId")!=null;
+}

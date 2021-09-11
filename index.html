@@ -59,28 +59,28 @@
         if(msg){
             mdui.snackbar(msg);
         }
-        listBoard("",function (data) {
+        listBoards("",function (data) {
             $("#loading").hide();
             let item = [
                 '<div class="mdui-col-sm-6 mdui-col-md-4" style="margin-top: 20px">',
-                '<div class="mdui-card">',
+                '<div class="mdui-card mdui-hoverable">',
                 '<div class="mdui-card-media">',
                 '<img src="./img/card.jpg"  alt="cover"/>',
                 '<div class="mdui-card-media-covered mdui-card-media-covered-gradient">',
                 '<div class="mdui-card-primary">',
-                '<div class="mdui-card-primary-title">Title</div>',
-                '<div class="mdui-card-primary-subtitle">Subtitle</div>',
+                '<div class="mdui-card-primary-title">%title%</div>',
+                '<div class="mdui-card-primary-subtitle">%subtitle%</div>',
                 '</div>',
                 '</div>',
                 '</div>',
                 '<div class="mdui-card-actions">',
-                '<button class="mdui-btn mdui-ripple" onclick="Link">进入板块</button>',
+                '<button class="mdui-btn mdui-ripple" onclick="%link%">进入板块</button>',
                 '</div>',
                 '</div>',
                 '</div>'
             ].join("\n");
             for(let i = 0;i<data["size"];i++){
-                $("#boards").append(item.replace("Title",data["boardList"][i]["name"]).replace("Subtitle",data["boardList"][i]["description"]).replace("Link","javascrtpt:window.location.href='./board/?boardId=" + data["boardList"][i]["id"] + "'"));
+                $("#boards").append(item.replace("%title%",data["boardList"][i]["name"]).replace("%subtitle%",data["boardList"][i]["description"]).replace("%link%","javascrtpt:window.location.href='./board/?boardId=" + data["boardList"][i]["id"] + "'"));
             }
         },function () {
             mdui.snackbar("加载失败");

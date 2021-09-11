@@ -67,19 +67,19 @@
     if(msg){
       mdui.snackbar(msg);
     }
-    listThread("boardId="+getQueryStringByName("boardId"),function (data) {
+    listThreads("boardId="+getQueryStringByName("boardId"),function (data) {
       $("#loading").hide();
       let item = [
-        '<a href="Link"><li class="mdui-list-item mdui-ripple">',
+        '<a href="%link%"><li class="mdui-list-item mdui-ripple">',
         '<div class="mdui-list-item-avatar"><i class="mdui-icon material-icons">assignment</i></div>',
         '<div class="mdui-list-item-content">',
-        '<div class="mdui-list-item-title">Title</div>',
-        '<div class="mdui-list-item-text mdui-list-item-one-line">Subtitle</div>',
+        '<div class="mdui-list-item-title">%title%</div>',
+        '<div class="mdui-list-item-text mdui-list-item-one-line">%subtitle%</div>',
         '</div>',
         '</li></a>',
       ].join("\n");
       for(let i = 0;i<data["size"];i++){
-        $("#threads").append(item.replace("Title",data["threadList"][i]["title"]).replace("Subtitle",data["threadList"][i]["publisher"]["userName"]).replace("Link","../thread/?id="+data["threadList"][i]["id"]));
+        $("#threads").append(item.replace("%title%",data["threadList"][i]["title"]).replace("%subtitle%",data["threadList"][i]["publisher"]["userName"]).replace("%link%","../thread/?id="+data["threadList"][i]["id"]));
         if(i!==data["size"]-1){
           $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0"></li>');
         }
