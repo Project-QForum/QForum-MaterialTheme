@@ -21,8 +21,8 @@
 	
 	$path     = __DIR__ . DIRECTORY_SEPARATOR;
 	$url      = dirname($_SERVER['PHP_SELF']) . '/';
-	$savePath = realpath($path . '../uploads/') . DIRECTORY_SEPARATOR;
-	$saveURL  = $url . '../uploads/';
+	$savePath = realpath($path . '../uploads/img/') . DIRECTORY_SEPARATOR;
+	$saveURL  = $url . '../uploads/img/';
 
 	$formats  = array(
 		'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp')

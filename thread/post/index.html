@@ -71,8 +71,13 @@
                 path: "../../editor.md/lib/",
                 saveHTMLToTextarea: true,
                 emoji:true,
-                atLink:true
+                atLink:true,
+                taskList:true,
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "../../editor.md/examples/php/upload.php"
             });
+
             let msg = getQueryStringByName("msg");
             if(msg){
                 mdui.snackbar(msg);
@@ -92,6 +97,7 @@
                 mdui.snackbar(analysisError(data["error"]));
             });
         }
+
     </script>
 
 </body>
