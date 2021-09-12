@@ -149,7 +149,7 @@
             }
             else{
                 for(let i = 0;i<data["size"];i++){
-                    $("#comments").append(item.replace("%title%",data["threadList"][i]["publisher"]["userName"]).replace("%subtitle%",data["threadList"][i]["content"]).replace("<script>","<javascript>").replace("<//script>","<//javascript>"));
+                    $("#comments").append(item.replace("%title%",data["threadList"][i]["publisher"]["userName"]).replace("%subtitle%",data["threadList"][i]["content"]).replace("<script>","<pre>").replace("<//script>","<//pre>"));
                     if(i!==data["size"]-1){
                         $("#comments").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
                     }

@@ -62,6 +62,7 @@
             }
         });
         $(function () {
+            editormd.urls.atLinkBase = "../../user/?username=";
             editor = editormd("editor", {
                 width: "90%",
                 height: 640,
@@ -69,7 +70,8 @@
                 placeholder: "请输入内容...",
                 path: "../../editor.md/lib/",
                 saveHTMLToTextarea: true,
-                emoji:true
+                emoji:true,
+                atLink:true
             });
             let msg = getQueryStringByName("msg");
             if(msg){
