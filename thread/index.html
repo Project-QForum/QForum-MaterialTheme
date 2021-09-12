@@ -21,15 +21,15 @@
 
 
 <div class="thread mdui-typo">
-    <h1 id="thread_title" class="mdui-text-color-theme" style="font-size: xxx-large">Loading...</h1>
+    <h1 id="thread_title" class="mdui-text-color-theme" style="font-size: xxx-large"><div class="mdui-spinner mdui-spinner-colorful"></div></h1>
     <div class="thread_publisher">
-        <a id="thread_publisher_userName" class="user-popover-trigger mdui-text-color-theme-text">Loading...</a>
+        <a id="thread_publisher_userName" class="user-popover-trigger mdui-text-color-theme-text"></a>
         <i id="admin" class="mdui-icon material-icons" style="display: none;margin-bottom: 10px">check_circle</i>
-        <span id="thread_time" class="time mdui-text-color-theme-secondary">Loading...</span>
+        <span id="thread_time" class="time mdui-text-color-theme-secondary"></span>
     </div>
     <div class="mdui-card mdui-card-shadow question">
-        <div id="thread_content">Loading...</div>
-
+        <div id="thread_content"><div class="mdui-progress"><div class="mdui-progress-indeterminate"></div></div></div>
+        
         <div class="mc-loading mdui-hidden">
             <div class="mdui-spinner">
                 <div class="mdui-spinner-layer ">
@@ -52,7 +52,7 @@
         </div>
 
         <div id="comments"></div>
-        <div id="new_comment" class="mdui-textfield new-comment" style="margin-left: -25px;margin-right: -25px;padding-bottom: 0">
+        <div id="new_comment" class="mdui-textfield new-comment mdui-textfield-floating-label" style="margin-left: -25px;margin-right: -25px;padding-bottom: 0">
             <input id="input_comment" class="mdui-textfield-input" type="text" placeholder="发一条友善的评论" style="width: 95%"/>
             <button id="btn_submit" onclick="commit()" class="mdui-btn mdui-btn-raised mdui-color-theme-600" style="width: 5%;margin-left: 20px">发布</button>
         </div>
@@ -133,7 +133,7 @@
         if(!isLogin()){
             $("#new_comment").hide()
         }
-        $("#comments").append('<p id="loading_comments" class="hint">加载中...</p>');
+        $("#comments").append('<div id="loading_comments" class="mdui-spinner mdui-spinner-colorful"></div>');
         listComments("threadId="+getQueryStringByName("id"),function (data) {
             let item = [
                 '<li class="mdui-list-item mdui-ripple">',
