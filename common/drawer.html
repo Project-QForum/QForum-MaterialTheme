@@ -42,9 +42,29 @@
             <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-theme-accent">info</i>
             <div class="mdui-list-item-content">关于</div>
         </a>
+        <div id="mdui-list-item copyright" class="copyright mdui-typo">
+            <p style="margin-bottom: 0">©2021 <a href="https://github.com/Project-QForum/">QForum</a></p>
+            <p id="hitokoto"><a href="#" id="hitokoto_text">:D 获取中...</a></p>
+        </div>
     </ul>
+
 </div>
+
 <style>
+    .copyright {
+        position:absolute;
+        bottom:10px;
+        padding:0;
+        margin: 0 10px;
+        max-width: 90%;
+    }
+    #hitokoto_text{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        font-size: 14px;
+    }
 </style>
 <script
         src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
@@ -52,5 +72,12 @@
         crossorigin="anonymous">
 </script>
 <script>
-
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            const hitokoto = document.getElementById('hitokoto_text')
+            hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+            hitokoto.innerText = data.hitokoto
+        })
+        .catch(console.error)
 </script>
