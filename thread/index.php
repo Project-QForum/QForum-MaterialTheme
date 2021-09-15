@@ -29,7 +29,7 @@
     </div>
     <div class="mdui-card mdui-card-shadow question">
         <div id="thread_content"><div class="mdui-progress"><div class="mdui-progress-indeterminate"></div></div></div>
-        
+
         <div class="mc-loading mdui-hidden">
             <div class="mdui-spinner">
                 <div class="mdui-spinner-layer ">
@@ -87,6 +87,12 @@
 <script src="../js/api/Thread.js"></script>
 <script src="../js/api/Comment.js"></script>
 <script src="../js/App.js"></script>
+
+<!-- 配合伪静态 -->
+<?php
+echo "<script>let tid=".$_GET["id"]."</script>";
+?>
+
 <script>
     $("#appbar").load("../../common/appbar.html", function (responseTxt, statusTxt) {
         if (statusTxt === "success") {
@@ -112,10 +118,11 @@
     }
     $(function () {
         let msg = getQueryStringByName("msg");
+        console.log(location.href);
         if (msg) {
             mdui.snackbar(msg);
         }
-        getThreadDetail("id=" + getQueryStringByName("id"), function (data) {
+        getThreadDetail("id=" + tid, function (data) {
             $("#thread_title").text(data["title"]);
             $("#thread_time").text(before_time(data["postTime"]));
             $("#thread_content").html(data["content"]);
@@ -134,7 +141,7 @@
             $("#new_comment").hide()
         }
         $("#comments").append('<div id="loading_comments" class="mdui-spinner mdui-spinner-colorful"></div>');
-        listComments("threadId="+getQueryStringByName("id"),function (data) {
+        listComments("threadId="+tid,function (data) {
             let item = [
                 '<li class="mdui-list-item mdui-ripple">',
                 '<div class="mdui-list-item-avatar"><i class="mdui-icon material-icons">account_circle</i></div>',
