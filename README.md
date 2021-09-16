@@ -8,6 +8,33 @@ QForum-MaterialTheme is the Official Front-end Theme of  [QForum](https://github
 
 This theme needs to be used with [QForum-Core](https://github.com/JackuXL/QForum-Core).
 
+### Start Using (Experimental)
+
+1. Install  [QForum-Core](https://github.com/JackuXL/QForum-Core).
+
+2. Modify BASE_URL in /js/util/NetWorkUtil.js to the address where QForum-Core is installed, and THEME_URL to the address where this theme is installed.
+
+3. Optional content:
+
+   - Modify the forum name in /common/appbar.html
+
+   - Add pseudo-static (implement /thread/TIDXXX and /board/BIDXXX)
+
+     ```nginx
+     # Nginx
+     # QForum-START
+     location ~ "^/thread/TID(.*)$" 
+     {
+         try_files $uri /thread/?id=$1;
+     }
+     
+     location ~ "^/board/BID(.*)$" 
+     {
+         try_files $uri /board/?boardId=$1;
+     }
+     # QForum-END
+     ```
+     
 ### Features
 
 - Use Material Design language.

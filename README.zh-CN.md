@@ -8,6 +8,33 @@ QForum-MaterialTheme 是 [QForum](https://github.com/JackuXL/QForum) 的官方�
 
 本主题需要配合 [QForum-Core](https://github.com/JackuXL/QForum-Core) 使用。
 
+### 开始使用（实验性）
+
+1. 安装  [QForum-Core](https://github.com/JackuXL/QForum-Core)。
+
+2. 修改 /js/util/NetWorkUtil.js 中的 BASE_URL 为安装 QForum-Core 的地址，THEME_URL 为安装本主题的地址。
+
+3. 可选内容：
+
+   - 修改 /common/appbar.html 中论坛名称
+
+   - 添加伪静态（实现 /thread/TIDXXX 和 /board/BIDXXX）
+
+     ```nginx
+     # Nginx
+     # QForum-START
+     location ~ "^/thread/TID(.*)$" 
+     {
+         try_files $uri /thread/?id=$1;
+     }
+     
+     location ~ "^/board/BID(.*)$" 
+     {
+         try_files $uri /board/?boardId=$1;
+     }
+     # QForum-END
+     ```
+
 ### 特点
 
 - 使用 Material Design 设计语言。
