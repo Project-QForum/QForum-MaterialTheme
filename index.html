@@ -87,7 +87,14 @@
                 '</div>'
             ].join("\n");
             for(let i = 0;i<data["size"];i++){
-                $("#boards").append(item.replace("%title%",data["boardList"][i]["name"]).replace("%subtitle%",data["boardList"][i]["description"]).replace("%link%","javascrtpt:window.location.href='./board/?boardId=" + data["boardList"][i]["id"] + "'"));
+                let link = "./board/?boardId=" + data["boardList"][i]["id"];
+                if(PSEUDO_STATIC_CONFIGURED){
+                    link = "./board/BID" + data["boardList"][i]["id"];
+                }
+                $("#boards")
+                    .append(item.replace("%title%",data["boardList"][i]["name"])
+                            .replace("%subtitle%",data["boardList"][i]["description"])
+                            .replace("%link%","javascrtpt:window.location.href='" + link + "'"));
             }
         },function () {
             mdui.snackbar("加载失败");

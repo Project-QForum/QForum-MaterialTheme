@@ -1,3 +1,5 @@
+let PSEUDO_STATIC_CONFIGURED = false;
+
 //根据参数名获取参数值
 function getQueryStringByName(name){
      var result = location.search.match(new RegExp("[\?\&]" + name+ "=([^\&]+)","i"));

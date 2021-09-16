@@ -84,7 +84,14 @@ echo "<script>let bid=".$_GET["boardId"]."</script>";
                 '</li></a>',
             ].join("\n");
             for(let i = data["size"]-1;i>=0;i--){
-                $("#threads").append(item.replace("%title%",data["threadList"][i]["title"]).replace("%subtitle%",data["threadList"][i]["publisher"]["userName"]).replace("%link%","../thread/?id="+data["threadList"][i]["id"]));
+                let link = "../thread/?id=" + data["threadList"][i]["id"];
+                if(PSEUDO_STATIC_CONFIGURED){
+                    link = "../thread/TID" + data["threadList"][i]["id"];
+                }
+                $("#threads")
+                    .append(item.replace("%title%",data["threadList"][i]["title"])
+                        .replace("%subtitle%",data["threadList"][i]["publisher"]["userName"])
+                        .replace("%link%",link));
                 if(i!==data["size"]-1){
                     $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0"></li>');
                 }
