@@ -34,9 +34,9 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<script src="../js/util/NetWorkUtil.js"></script>
-<script src="../js/App.js"></script>
-<script src="../js/api/Thread.js"></script>
+<script src="../js/util/NetWorkUtil_v1.js"></script>
+<script src="../js/app_v1.js"></script>
+<script src="../js/api/thread_v1.js"></script>
 
 <!-- 配合伪静态 -->
 <?php
