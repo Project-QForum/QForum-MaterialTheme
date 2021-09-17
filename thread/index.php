@@ -54,7 +54,7 @@
         <div id="comments"></div>
         <div id="new_comment" class="mdui-textfield new-comment mdui-textfield-floating-label" style="margin-left: -25px;margin-right: -25px;padding-bottom: 0">
             <input id="input_comment" class="mdui-textfield-input" type="text" placeholder="发一条友善的评论" style="width: 95%"/>
-            <button id="btn_submit" onclick="commit()" class="mdui-btn mdui-btn-raised mdui-color-theme-600" style="width: 5%;margin-left: 20px">发布</button>
+            <button id="btn_submit" onclick="sendComment()" class="mdui-btn mdui-btn-raised mdui-color-theme-600" style="width: 5%;margin-left: 20px">发布</button>
         </div>
     </div>
 </div>
@@ -104,16 +104,49 @@ echo "<script>let tid=".$_GET["id"]."</script>";
             $("#main").attr("href","../");
         }
     });
-    function commit() {
+    function sendComment() {
         let params = {};
         params.sessionId = getCookie("sessionId");
-        params.threadId = getQueryStringByName("id");
+        params.threadId = tid;
         params.content = $("#input_comment").val();
         params = $.param(params);
-        postComment(params,function () {
-            mdui.snackbar("发送成功，请刷新")
+        postComment(params,function (data) {
+            $("#input_comment").val("");
+            mdui.snackbar("发送成功");
+            loadComment();
+            location.href = "#reply" + data["comment"]["id"];
         },function (data) {
             mdui.snackbar(analysisError(data["error"]));
+        });
+    }
+    function loadComment() {
+        $("#comments").html("");
+        $("#comments").append('<div id="loading_comments" class="mdui-spinner mdui-spinner-colorful"></div>');
+        listComments("threadId="+tid,function (data) {
+            let item = [
+                '<li id="reply%id%" class="mdui-list-item mdui-ripple">',
+                '<div class="mdui-list-item-avatar"><i class="mdui-icon material-icons">account_circle</i></div>',
+                '<div class="mdui-list-item-content">',
+                '<div class="mdui-list-item-title">%title%</div>',
+                '<div class="mdui-list-item-text">%subtitle%</div>',
+                '</div>',
+                '</li>',
+            ].join("\n");
+            if(data["size"]<=0){
+                $("#comments").append('<p class="hint">什么都没有哦</p>');
+            }
+            else{
+                for(let i = 0;i<data["size"];i++){
+                    $("#comments").append(item.replace("%title%",data["commentList"][i]["publisher"]["userName"]).replace("%subtitle%",data["commentList"][i]["content"]).replace("<script>","<pre>").replace("<//script>","<//pre>").replace("%id%",data["commentList"][i]["id"]));
+                    if(data["size"]-i!==1){
+                        $("#comments").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
+                    }
+                }
+            }
+            $("#loading_comments").hide()
+
+        },function () {
+            mdui.snackbar("加载失败");
         });
     }
     $(function () {
@@ -140,33 +173,7 @@ echo "<script>let tid=".$_GET["id"]."</script>";
         if(!isLogin()){
             $("#new_comment").hide()
         }
-        $("#comments").append('<div id="loading_comments" class="mdui-spinner mdui-spinner-colorful"></div>');
-        listComments("threadId="+tid,function (data) {
-            let item = [
-                '<li class="mdui-list-item mdui-ripple">',
-                '<div class="mdui-list-item-avatar"><i class="mdui-icon material-icons">account_circle</i></div>',
-                '<div class="mdui-list-item-content">',
-                '<div class="mdui-list-item-title">%title%</div>',
-                '<div class="mdui-list-item-text">%subtitle%</div>',
-                '</div>',
-                '</li>',
-            ].join("\n");
-            if(data["size"]<=0){
-                $("#comments").append('<p class="hint">什么都没有哦</p>');
-            }
-            else{
-                for(let i = 0;i<data["size"];i++){
-                    $("#comments").append(item.replace("%title%",data["commentList"][i]["publisher"]["userName"]).replace("%subtitle%",data["commentList"][i]["content"]).replace("<script>","<pre>").replace("<//script>","<//pre>"));
-                    if(data["size"]-i!==1){
-                        $("#comments").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
-                    }
-                }
-            }
-            $("#loading_comments").hide()
-
-        },function () {
-            mdui.snackbar("加载失败");
-        });
+        loadComment();
     });
 
 </script>
