@@ -158,26 +158,28 @@
                         var uploadIframe = document.getElementById(iframeName);
 
                         uploadIframe.onload = function() {
-
                             loading(false);
-
-                            var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
-                            var json = (body.innerText) ? body.innerText : ( (body.textContent) ? body.textContent : null);
-
-                            json = (typeof JSON.parse !== "undefined") ? JSON.parse(json) : eval("(" + json + ")");
-
-                            if(!settings.crossDomainUpload)
-                            {
-                              if (json.success === 1)
-                              {
-                                  dialog.find("[data-url]").val(json.url);
-                              }
-                              else
-                              {
-                                  alert(json.message);
-                              }
-                            }
-
+                            let formData = new FormData();
+                            formData.append("editormd-image-file", $("input[type=file]")[0].files[0]);
+                            let action = settings.imageUploadURL + (settings.imageUploadURL.indexOf("?") >= 0 ? "&" :
+                                "?") + "guid=" + guid;
+                            $.ajax({
+                                type: "post",
+                                url: action,
+                                data: formData,
+                                dataType: "json",
+                                async: false,
+                                processData: false,
+                                contentType: false,
+                                success: function(data) {
+                                    if (data.success === 1) {
+                                        //回显的url
+                                        dialog.find("[data-url]").val(data["url"]);
+                                    } else {
+                                        alert(data["message"])
+                                    }
+                                },
+                            });
                             return false;
                         };
                     };

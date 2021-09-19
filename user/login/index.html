@@ -58,7 +58,7 @@
 <script src="../../js/md5_v1.js"></script>
 <script src="../../js/app_v1.js"></script>
 <script src="../../js/util/NetWorkUtil_v1.js"></script>
-<script src="../../js/api/user_v1.js"></script>
+<script src="../../js/api/user_v2.js"></script>
 <style>
     .mdui-card {
         position: absolute;
@@ -95,13 +95,18 @@
             params.md5 = true;
             params = $.param(params);
             login(params,function (data) {
-                if(JSON.stringify(data).indexOf("sessionId") !== -1){
-                    setCookie("sessionId",data["sessionId"]);
+                if(JSON.stringify(data).indexOf("profile")!==-1){
+                    let profile = data["profile"];
+                    setCookie("uid",profile["id"]);
+                    setCookie("sessionId",profile["sessionId"]);
+                    setCookie("userName",profile["userName"]);
+                    location.href = "../../?msg=登录成功";
                 }
-                if(JSON.stringify(data).indexOf("username") !== -1){
-                    setCookie("userName",data["username"]);
+                else{
+                    mdui.snackbar("登录失败");
                 }
-                location.href = "../../?msg=登录成功";
+
+
             },function (data) {
                 mdui.snackbar(analysisError(data["error"]));
             });

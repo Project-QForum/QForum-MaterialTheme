@@ -7,3 +7,6 @@ function login(params,success,failure){
 function checkLogin(params,success,failure){
     sendGet("user/checkLogin",params,success,failure);
 }
+function getProfile(uid,success,failure) {
+    sendGet("user/getProfile","id="+uid,success,failure);
+}

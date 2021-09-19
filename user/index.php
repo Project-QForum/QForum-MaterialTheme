@@ -29,12 +29,12 @@
 <div class="mdui-card mdui-shadow-5">
 
     <div class="mdui-card-media">
-      <img class="mdui-img-fluid mdui-img-rounded" src="../img/logo.png"/>
-      </div>
+      <img class="mdui-img-fluid mdui-img-rounded" src="../img/card.jpg"/>
+    </div>
     
     <div class="mdui-card-primary">
-      <div class="mdui-card-primary-title">UserName</div>
-      <div class="mdui-card-primary-subtitle">UserInfo</div>
+      <div id="userName" class="mdui-card-primary-title">UserName</div>
+      <div id="email" class="mdui-card-primary-subtitle">UserInfo</div>
       <!-- TODO——用户头衔等信息 -->
       <div class="mdui-card-content">个人简介</div>
     </div>
@@ -108,6 +108,15 @@
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script src="../js/util/NetWorkUtil_v1.js"></script>
 <script src="../js/app_v1.js"></script>
+<script src="../js/api/user_v2.js"></script>
+<?php
+    if(array_key_exists("uid",$_GET)){
+        echo "<script>let uid=".$_GET["uid"]."</script>";
+    }
+    else{
+        echo "<script>let uid=".$_COOKIE["uid"]."</script>";
+    }
+?>
 <script>
     $("#appbar").load("../common/appbar.html", function (responseTxt, statusTxt) {
         if (statusTxt === "success") {
@@ -124,6 +133,10 @@
         if(msg){
             mdui.snackbar(msg);
         }
+        getProfile(uid,function (data) {
+            $("#userName").text(data["profile"]["userName"]);
+            $("#email").text(data["profile"]["email"]);
+        });
     });
 </script>
 

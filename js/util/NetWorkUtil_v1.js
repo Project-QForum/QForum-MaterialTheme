@@ -1,4 +1,4 @@
-BASE_URL = "https://api.wearbbs.cn/";
+BASE_URL = "http://localhost:8080/";
 THEME_URL = "https://beta.wearbbs.cn/"
 
 function sendGet(url,params,success,failure){

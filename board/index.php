@@ -62,9 +62,9 @@ echo "<script>let bid=".$_GET["boardId"]."</script>";
 
     function onPostThreadButtonClick() {
         if (isLogin()) {
-            location.href = "/thread/post/?boardId="+bid;
+            location.href = "../thread/post/?boardId="+bid;
         } else {
-            location.href = "/user/login"
+            location.href = "../user/login"
         }
     }
     $(function () {

@@ -75,7 +75,9 @@
                 taskList:true,
                 imageUpload : true,
                 imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                imageUploadURL : "../../editor.md/examples/php/upload.php"
+                imageUploadURL : "http://localhost:8080/image/upload",
+                crossDomainUpload : true
+
             });
 
             let msg = getQueryStringByName("msg");
