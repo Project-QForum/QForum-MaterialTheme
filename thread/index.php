@@ -46,6 +46,16 @@
             </div>
         </div>
     </div>
+    <div class="mdui-card mdui-card-shadow ops" style="margin-top: 20px">
+        <span id="like">
+            <i id="icon_like" class="mdui-icon material-icons toolbar-icon">thumb_up</i>&nbsp;
+            点赞
+        </span>
+        <span id="comment">
+            <i id="icon_comment" class="mdui-icon material-icons toolbar-icon">comment</i>&nbsp;
+            评论
+        </span>
+    </div>
     <div id="comments_box" class="mdui-card mdui-card-shadow question" style="margin-top: 20px">
         <div style="font-size: x-large;margin-top: 20px;margin-bottom: 20px">
             评论
@@ -76,6 +86,23 @@
         margin-top: 10px;
         font-size: 20px;
     }
+
+    .ops>span {
+        width: 92px;
+        margin-right: 8px;
+        cursor: pointer;
+        transition: all .3s;
+        display: inline-block;
+        white-space: nowrap;
+        color: #505050;
+        position: relative;
+    }
+    .toolbar-icon{
+        font-size: 200%;
+        margin-bottom: 3px;
+        color:grey;
+    }
+
 </style>
 <script
         src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
@@ -84,7 +111,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="../js/util/NetWorkUtil_v1.js"></script>
-<script src="../js/api/thread_v1.js"></script>
+<script src="../js/api/thread_v2.js"></script>
 <script src="../js/api/comment_v1.js"></script>
 <script src="../js/app_v1.js"></script>
 
@@ -149,12 +176,31 @@ echo "<script>let tid=".$_GET["id"]."</script>";
             mdui.snackbar("加载失败");
         });
     }
+    function getJsonArrayLength(jsonData){
+        for(let i=0; true; i++){
+            if(jsonData[i]===undefined){
+                return i;
+            }
+        }
+    }
+    function updateLikeNum(oldNum,newNum){
+        if(oldNum===0){
+            $("#like").html($("#like").html().replace("点赞",newNum));
+        }
+        else if(newNum===0){
+            $("#like").html($("#like").html().replace(oldNum,"点赞"));
+        }
+        else{
+            $("#like").html($("#like").html().replace(oldNum,newNum));
+        }
+
+    }
     $(function () {
         let msg = getQueryStringByName("msg");
-        console.log(location.href);
         if (msg) {
             mdui.snackbar(msg);
         }
+        let liked = false;
         getThreadDetail("id=" + tid, function (data) {
             $("#thread_title").text(data["title"]);
             $("#thread_time").text(before_time(data["postTime"]));
@@ -163,6 +209,46 @@ echo "<script>let tid=".$_GET["id"]."</script>";
             if(data["publisher"]["admin"]){
                 $("#admin").show();
             }
+
+            let likeList = JSON.parse(data["likeList"]);
+            let likeNum = getJsonArrayLength(likeList);
+            if(likeNum>0){
+                for(let i = 0;i<likeNum;i++){
+                    if(likeList[i]==getCookie("uid")){
+                        $("#icon_like").addClass("mdui-text-color-theme");
+                        liked = true;
+                    }
+                }
+                updateLikeNum(0,likeNum);
+            }
+
+            $("#like").click(function () {
+                if(liked){
+                    dislikeThread("sessionId="+getCookie("sessionId")+"&tid="+tid,function (){
+                        $("#icon_like").removeClass("mdui-text-color-theme");
+                        liked = false;
+                        mdui.snackbar("取消点赞成功");
+                        updateLikeNum(likeNum,--likeNum);
+
+                    },function (data) {
+                        mdui.snackbar(data["error"]);
+                    });
+                }
+                else{
+                    likeThread("sessionId="+getCookie("sessionId")+"&tid="+tid,function (){
+                        $("#icon_like").addClass("mdui-text-color-theme");
+                        liked = true;
+                        mdui.snackbar("点赞成功");
+                        updateLikeNum(likeNum,++likeNum);
+                    },function (data) {
+                        mdui.snackbar(data["error"]);
+                    });
+
+                }
+            });
+            $("#comment").click(function () {
+                location.href = "#input_comment";
+            });
         }, function (data) {
             $("#thread_title").text("加载失败");
             $("#thread_time").text("加载失败");
