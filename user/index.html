@@ -107,16 +107,8 @@
 ></script>
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script src="../js/util/NetWorkUtil_v1.js"></script>
-<script src="../js/app_v1.js"></script>
+<script src="../js/app_v2.js"></script>
 <script src="../js/api/user_v2.js"></script>
-<?php
-    if(array_key_exists("uid",$_GET)){
-        echo "<script>let uid=".$_GET["uid"]."</script>";
-    }
-    else{
-        echo "<script>let uid=".$_COOKIE["uid"]."</script>";
-    }
-?>
 <script>
     $("#appbar").load("../common/appbar.html", function (responseTxt, statusTxt) {
         if (statusTxt === "success") {
@@ -132,6 +124,12 @@
         let msg = getQueryStringByName("msg");
         if(msg){
             mdui.snackbar(msg);
+        }
+        let uid = getCookie("uid");
+        if(!PSEUDO_STATIC_CONFIGURED){
+            if(getQueryStringByName("uid")!==""){
+                uid = getQueryStringByName("uid");
+            }
         }
         getProfile(uid,function (data) {
             $("#userName").text(data["profile"]["userName"]);

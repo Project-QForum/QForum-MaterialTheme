@@ -11,6 +11,13 @@ function getQueryStringByName(name){
      }
      return result[1];
 }
+function getUrlValue(){
+    let url = location.href;
+    //获取最后一个/的位置
+    let site = url.lastIndexOf("\/");
+    //截取最后一个/后的值
+    return url.substring(site + 1, url.length);
+}
 function before_time(dateTimeStamp) {
     var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
     var hour = minute * 60;
