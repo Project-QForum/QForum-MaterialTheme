@@ -110,6 +110,7 @@
         crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="../js/util/xss.js"></script>
 <script src="../js/util/NetWorkUtil_v1.js"></script>
 <script src="../js/api/thread_v2.js"></script>
 <script src="../js/api/comment_v1.js"></script>
@@ -159,7 +160,10 @@
             }
             else{
                 for(let i = 0;i<data["size"];i++){
-                    $("#comments").append(item.replace("%title%",data["commentList"][i]["publisher"]["userName"]).replace("%subtitle%",data["commentList"][i]["content"]).replace("<script>","<pre>").replace("<//script>","<//pre>").replace("%id%",data["commentList"][i]["id"]));
+                    $("#comments").append(
+                        item.replace("%title%",filterXSS(data["commentList"][i]["publisher"]["userName"]))
+                            .replace("%subtitle%",filterXSS(data["commentList"][i]["content"]))
+                            .replace("%id%",filterXSS(data["commentList"][i]["id"])));
                     if(data["size"]-i!==1){
                         $("#comments").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
                     }
@@ -208,7 +212,7 @@
         getThreadDetail("id=" + tid, function (data) {
             $("#thread_title").text(data["title"]);
             $("#thread_time").text(before_time(data["postTime"]));
-            $("#thread_content").html(data["content"]);
+            $("#thread_content").html(filterXSS(data["content"]));
             $("#thread_publisher_userName").text(data["publisher"]["userName"]);
             if(data["publisher"]["admin"]){
                 $("#admin").show();

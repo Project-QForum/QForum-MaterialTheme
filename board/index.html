@@ -34,6 +34,7 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script src="../js/util/xss.js"></script>
 <script src="../js/util/NetWorkUtil_v1.js"></script>
 <script src="../js/app_v2.js"></script>
 <script src="../js/api/thread_v2.js"></script>
@@ -93,9 +94,9 @@
                     link = "../thread/TID" + data["threadList"][i]["id"];
                 }
                 $("#threads")
-                    .append(item.replace("%title%",data["threadList"][i]["title"])
-                        .replace("%subtitle%",data["threadList"][i]["publisher"]["userName"])
-                        .replace("%link%",link));
+                    .append(item.replace("%title%",filterXSS(data["threadList"][i]["title"]))
+                        .replace("%subtitle%",filterXSS(data["threadList"][i]["publisher"]["userName"]))
+                        .replace("%link%",filterXSS(link)));
                 if(i!==data["size"]-1){
                     $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0"></li>');
                 }
