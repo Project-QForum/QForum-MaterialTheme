@@ -1,3 +1,7 @@
+> ⚠Please note that this project is no longer maintained, please use QForum-Web-MaterialDesign.
+>
+> ⚠请注意，此项目已不再维护，请使用 QForum-Web-MaterialDesign.
+
 # QForum-MaterialTheme
 
 ◀[Back to the index of the QForum project](https://github.com/JackuXL/QForum)
@@ -34,7 +38,7 @@ This theme needs to be used with [QForum-Core](https://github.com/JackuXL/QForum
      }
      # QForum-END
      ```
-     
+
 ### Features
 
 - Use Material Design language.
