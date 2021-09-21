@@ -1,6 +1,6 @@
-> ⚠Please note that this project is no longer maintained, please use QForum-Web-MaterialDesign.
+> ⚠Please note that this project is no longer maintained, please use [QForum-Web-MaterialDesign](https://github.com/Project-QForum/QForum-Web-MaterialDesign).
 >
-> ⚠请注意，此项目已不再维护，请使用 QForum-Web-MaterialDesign.
+> ⚠请注意，此项目已不再维护，请使用 [QForum-Web-MaterialDesign](https://github.com/Project-QForum/QForum-Web-MaterialDesign)。
 
 # QForum-MaterialTheme
 
