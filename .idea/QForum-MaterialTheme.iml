@@ -8,10 +8,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jquery-1.9.0" level="application" />
-    <orderEntry type="library" name="jquery-3.5.1" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="webadb" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="@material-ui/core" level="application" />
+    <orderEntry type="library" name="react" level="application" />
   </component>
 </module>

@@ -12,17 +12,17 @@ function sendPost(url,params,success,failure){
 
 function setCookie(name,value)
 {
-    var Days = 30;
-    var exp = new Date(); 
+    const Days = 30;
+    const exp = new Date();
     exp.setTime(exp.getTime() + Days*24*60*60*1000);
     document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";path=/";
 }
 //读取cookies
 function getCookie(name)
 {
-    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-    if(arr = document.cookie.match(reg)) return unescape(arr[2])==="null"?null:unescape(arr[2]);
-    else return null;
+    let arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    arr = document.cookie.match(reg);
+    return unescape(arr[2])==="null"?null:unescape(arr[2]);
 }
 //删除cookies
 function delCookie(name)
