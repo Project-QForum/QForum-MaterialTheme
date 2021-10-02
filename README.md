@@ -34,7 +34,7 @@ This theme needs to be used with [QForum-Core](https://github.com/JackuXL/QForum
      }
      # QForum-END
      ```
-     
+
 ### Features
 
 - Use Material Design language.
