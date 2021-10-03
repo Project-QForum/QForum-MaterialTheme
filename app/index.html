@@ -25,7 +25,7 @@
 <div id="appbar"></div>
 <div id="drawer"></div>
 
-
+<button class="mdui-fab mdui-fab-fixed post"><i class="mdui-icon material-icons">add</i></button>
 
 
 <div id="loading" class="mdui-progress">
@@ -69,12 +69,12 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<script src="../js/app_v2.js"></script>
-<script src="../js/api/app_v1.js"></script>
-<script src="../js/api/tag_v1.js"></script>
-<script src="../js/api/user_v2.js"></script>
+<script src="../js/App_v1.js"></script>
+<script src="../js/api/AppApi_v1.js"></script>
+<script src="../js/api/TagApi_v1.js"></script>
+<script src="../js/api/UserApi_v1.js"></script>
 <script src="../js/util/NetWorkUtil_v2.js"></script>
-<script src="../js/util/xss.js"></script>
+<script src="../js/util/XSSUtil_v1.js"></script>
 <script>
     $("#appbar").load("../common/appbar.html", function (responseTxt, statusTxt) {
         if (statusTxt === "success") {
@@ -89,6 +89,16 @@
     $("button").click(function (){
         location.href = THEME_URL;
     });
+    $(".post").click(function (){
+        onPostAppButtonClick();
+    });
+    function onPostAppButtonClick(){
+        if (isLogin()) {
+            location.href = "../app/post";
+        } else {
+            location.href = "../user/login"
+        }
+    }
     function loadApps(tagId){
         let param = "";
         if(tagId!=null){

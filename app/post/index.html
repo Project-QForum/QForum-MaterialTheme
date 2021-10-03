@@ -24,16 +24,62 @@
     <div id="appbar"></div>
     <div id="drawer"></div>
 
+    <div class="mdui-container" style="margin: 5%">
+
     <div class="mdui-container mdui-typo" style="margin-bottom: 10px">
         <div class="mdui-textfield mdui-textfield-floating-label">
-            <label for="thread_title" class="mdui-textfield-label" style="font-size: x-large">标题</label>
-            <input id="thread_title" class="mdui-textfield-input" type="text"/>
+            <label for="appName" class="mdui-textfield-label" style="font-size: x-large">标题</label>
+            <input id="appName" class="mdui-textfield-input" type="text"/>
         </div>
     </div>
+        <div class="mdui-table-fluid" style="width: 90%;margin-left: 5%;margin-bottom: 10px">
+            <table class="mdui-table" style="width: 90%">
+                <tbody>
+                <tr>
+                    <td>分类</td>
+                    <td id="tag_container"></td>
+                </tr>
+                <tr>
+                    <td>包名</td>
+                    <td><div class="mdui-textfield">
+                        <input id="packageName" class="mdui-textfield-input" type="text" placeholder="包名"/>
+                    </div></td>
+                </tr>
+                <tr>
+                    <td>版本号</td>
+                    <td><div class="mdui-textfield">
+                        <input id="version" class="mdui-textfield-input" type="text" placeholder="版本号"/>
+
+                    </div></td>
+                </tr>
+                <tr>
+                    <td>简介</td>
+                    <td><div class="mdui-textfield">
+                        <input id="slogan" class="mdui-textfield-input" type="text" placeholder="简介"/>
+                    </div></td>
+                </tr>
+                <tr>
+                    <td>图标地址</td>
+                    <td><div class="mdui-textfield">
+                        <input id="iconUrl" class="mdui-textfield-input" type="url" placeholder="图标地址"/>
+                    </div></td>
+                </tr>
+                <tr>
+                    <td>下载地址</td>
+                    <td><div class="mdui-textfield">
+                        <input id="downloadUrl" class="mdui-textfield-input" type="url" placeholder="下载地址"/>
+                    </div></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
     <div id="editor">
         <textarea style="display:none;"></textarea>
     </div>
-    <button onclick="submit()" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" style="margin-right: 5%;float: right">发布主题</button>
+        <button onclick="submit()" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" style="margin-right: 5%;float: right">发布应用</button>
+    </div>
+
 
     <!-- MDUI JavaScript -->
     <script
@@ -44,6 +90,8 @@
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="../../js/App_v1.js"></script>
     <script src="../../js/api/ThreadApi_v1.js"></script>
+    <script src="../../js/api/TagApi_v1.js"></script>
+    <script src="../../js/api/AppApi_v1.js"></script>
     <script src="../../js/util/NetWorkUtil_v2.js"></script>
     <script src="../../editor.md/editormd.min.js"></script>
     <script>
@@ -84,17 +132,32 @@
             if(msg){
                 mdui.snackbar(msg);
             }
+            listTags("",function (data){
+                $("#tag_container").html('<select id="tags" className="mdui-select" mdui-select></select>')
+                for(let i = 0;i<data["size"];i++){
+                    $("#tags")
+                        .append('<option value="' + data["tagList"][i]["id"] + '">' + data["tagList"][i]["name"] + '</option>'
+                        );
+                    if(data["size"]-i!==1){
+                        $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
+                    }
+                }
+                mdui.mutation();
+            });
         });
         function submit(){
             let params = {};
             params.sessionId = getCookie("sessionId");
-            params.title = $("#thread_title").val();
-            params.type = 0;
-            params.boardId = getQueryStringByName("boardId");
-            params.content = editor.getHTML();
+            params.name = $("#appName").val();
+            params.downloadUrl = $("#downloadUrl").val();
+            params.iconUrl = $("#iconUrl").val();
+            params.version = $("#version").val();
+            params.slogan = $("#slogan").val();
+            params.packageName = $("#packageName").val();
+            params.description = editor.getHTML();
             params = $.param(params);
-            postThread(params,function (data) {
-                location.href = "../?id="+data["id"]+"&msg=发布成功";
+            postApp(params,function (data) {
+                location.href = "../detail/?packageName="+data["packageName"]+"&msg=发布成功";
             },function (data) {
                 mdui.snackbar(analysisError(data["error"]));
             });
