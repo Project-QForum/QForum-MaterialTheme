@@ -88,6 +88,10 @@
                 bid = getQueryStringByName("boardId");
             }
         }
+
+        $(".post").click(function (){
+            onPostThreadButtonClick();
+        });
         listThreads("boardId="+bid,function (data) {
             $("#loading").hide();
             let item = [
@@ -101,9 +105,6 @@
             ].join("\n");
             $("#board_title").text(data["threadList"][0]["board"]["name"]);
             $("#board_description").text(data["threadList"][0]["board"]["description"]);
-            $(".post").click(function (){
-                onPostThreadButtonClick();
-            });
             for(let i = 0;i<data["size"];i++){
                 let link = "../thread/?id=" + data["threadList"][i]["id"];
                 if(PSEUDO_STATIC_CONFIGURED){

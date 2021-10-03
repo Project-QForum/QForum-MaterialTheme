@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-cmn-Hans"><!-- 简体中文（大陆）现代标准 -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <!-- MDUI CSS -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"
+            integrity="sha384-cLRrMq39HOZdvE0j6yBojO4+1PrHfB7a9l5qLcmRm/fiWXYY+CndJPmyu5FV/9Tw"
+            crossorigin="anonymous"
+    />
+
+
+    <!-- Title -->
+    <title>应用 | QForum</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../img/favicon.png">
+
+</head>
+<body class="mdui-theme-primary-blue mdui-theme-accent-blue mdui-drawer-body-left mdui-appbar-with-toolbar">
+
+
+<div id="appbar"></div>
+<div id="drawer"></div>
+
+
+
+
+<div id="loading" class="mdui-progress">
+    <div class="mdui-progress-indeterminate"></div>
+</div>
+<div class="mdui-container" style="margin:5%">
+<button class="back mdui-btn mdui-ripple"><i class="mdui-icon mdui-icon-left material-icons">arrow_back</i>返回</button>
+<div class="mdui-card mdui-card-shadow ops" style="margin-top: 5px">
+    <h1></h1>
+    <ul id="apps" class="mdui-list">
+    </ul>
+</div>
+</div>
+
+
+<style>
+
+
+    .ops>span {
+        width: 92px;
+        margin-right: 8px;
+        cursor: pointer;
+        transition: all .3s;
+        display: inline-block;
+        white-space: nowrap;
+        color: #505050;
+        position: relative;
+    }
+    .toolbar-icon{
+        font-size: 200%;
+        margin-bottom: 3px;
+        color:grey;
+    }
+
+</style>
+
+<!-- MDUI JavaScript -->
+<script
+        src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
+        integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
+        crossorigin="anonymous"
+></script>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script src="../js/app_v2.js"></script>
+<script src="../js/api/app_v1.js"></script>
+<script src="../js/api/tag_v1.js"></script>
+<script src="../js/api/user_v2.js"></script>
+<script src="../js/util/NetWorkUtil_v1.js"></script>
+<script src="../js/util/xss.js"></script>
+<script>
+    $("#appbar").load("../common/appbar.html", function (responseTxt, statusTxt) {
+        if (statusTxt === "success") {
+            $("#title").text("首页");
+        }
+    });
+    $("#drawer").load("../common/drawer.html", function (responseTxt, statusTxt) {
+        if (statusTxt === "success") {
+            $("#main").attr("href","../");
+        }
+    });
+    $("button").click(function (){
+        location.href = THEME_URL;
+    });
+    function loadApps(tagId){
+        let param = "";
+        if(tagId!=null){
+            param = "tagId="+tagId;
+        }
+        $("#apps").html("");
+        listApps(param,function (data){
+            $("#loading").hide();
+            let item = [
+                '<a href="%link%"><li class="mdui-list-item mdui-ripple">',
+                '<div class="mdui-list-item-avatar"><img src="%icon%"></div>',
+                '<div class="mdui-list-item-content">',
+                '<div class="mdui-list-item-title">%title%</div>',
+                '<div class="mdui-list-item-text mdui-list-item-one-line">%subtitle%</div>',
+                '</div>',
+                '</li></a>',
+            ].join("\n");
+            for(let i = 0;i<data["size"];i++){
+                let link = "../app/detail/?packageName=" + data["appList"][i]["packageName"];
+                if(PSEUDO_STATIC_CONFIGURED){
+                    link = "../app/detail/" + data["appList"][i]["packageName"];
+                }
+                $("#apps")
+                    .append(item.replace("%title%",filterXSS(data["appList"][i]["name"]))
+                        .replace("%subtitle%",filterXSS(data["appList"][i]["slogan"]))
+                        .replace("%link%",filterXSS(link))
+                        .replace("%icon%",filterXSS(data["appList"][i]["iconUrl"]))
+                    );
+                if(data["size"]-i!==1){
+                    $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
+                }
+            }
+        });
+    }
+    $(function () {
+        let msg = getQueryStringByName("msg");
+        if(msg){
+            mdui.snackbar(msg);
+        }
+        listTags("",function (data){
+            $("h1").html('<select id="tags" className="mdui-select" mdui-select><option value="default">全部应用</option></select>')
+            for(let i = 0;i<data["size"];i++){
+                $("#tags")
+                    .append('<option value="' + data["tagList"][i]["id"] + '">' + data["tagList"][i]["name"] + '</option>'
+                    );
+                if(data["size"]-i!==1){
+                    $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
+                }
+            }
+            $("#tags").bind("change",function(){
+                if($(this).val()==="default"){
+                    loadApps(null);
+                }
+                else{
+                    loadApps($(this).val());
+                }
+            });
+            mdui.mutation();
+        });
+        loadApps(null);
+    });
+</script>
+</body>
+</html>
