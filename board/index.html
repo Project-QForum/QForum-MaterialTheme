@@ -18,15 +18,25 @@
     <!-- Title -->
     <title>板块 | QForum</title>
     <link rel="shortcut icon" href="../img/favicon.png">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="mdui-theme-primary-blue mdui-theme-accent-blue mdui-drawer-body-left mdui-appbar-with-toolbar">
 
-
+<button class="mdui-fab mdui-fab-fixed post"><i class="mdui-icon material-icons">add</i></button>
 <div id="appbar"></div>
 <div id="drawer"></div>
+<div class="mdui-container" style="margin:5%;">
+<button class="back mdui-btn mdui-ripple"><i class="mdui-icon mdui-icon-left material-icons">arrow_back</i>返回</button>
+<div class="mdui-card mdui-card-shadow question" style="margin-top: 5px">
+    <h1 id="board_title">Loading...</h1>
+    <h2 id="board_description" style="color: darkgray">...</h2>
+</div>
+<div class="mdui-card question" style="margin-top: 20px">
+    <ul id="threads" class="mdui-list">
+    </ul>
+</div>
+</div>
 
-<ul id="threads" class="mdui-list">
-</ul>
 <!-- MDUI JavaScript -->
 <script
         src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
@@ -48,9 +58,10 @@
     $("#drawer").load("../../common/drawer.html", function (responseTxt, statusTxt) {
         if (statusTxt === "success") {
             $("#main").attr("href","../");
-
-            $("#postThread").show();
         }
+    });
+    $(".back").click(function (){
+        location.href = THEME_URL;
     });
     function isLogin() {
         return getCookie("sessionId")!=null;
@@ -88,17 +99,23 @@
                 '</div>',
                 '</li></a>',
             ].join("\n");
-            for(let i = data["size"]-1;i>=0;i--){
+            $("#board_title").text(data["threadList"][0]["board"]["name"]);
+            $("#board_description").text(data["threadList"][0]["board"]["description"]);
+            $(".post").click(function (){
+                onPostThreadButtonClick();
+            });
+            for(let i = 0;i<data["size"];i++){
                 let link = "../thread/?id=" + data["threadList"][i]["id"];
                 if(PSEUDO_STATIC_CONFIGURED){
                     link = "../thread/TID" + data["threadList"][i]["id"];
                 }
+
                 $("#threads")
                     .append(item.replace("%title%",filterXSS(data["threadList"][i]["title"]))
                         .replace("%subtitle%",filterXSS(data["threadList"][i]["publisher"]["userName"]))
                         .replace("%link%",filterXSS(link)));
-                if(i!==data["size"]-1){
-                    $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0"></li>');
+                if(data["size"]-i!==1){
+                    $("#threads").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
                 }
             }
         },function () {

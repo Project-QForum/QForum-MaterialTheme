@@ -21,13 +21,15 @@
 
 
 <div class="thread mdui-typo">
-    <h1 id="thread_title" class="mdui-text-color-theme" style="font-size: xxx-large"><div class="mdui-spinner mdui-spinner-colorful"></div></h1>
-    <div class="thread_publisher">
-        <a id="thread_publisher_userName" class="user-popover-trigger mdui-text-color-theme-text"></a>
-        <i id="admin" class="mdui-icon material-icons" style="display: none;margin-bottom: 10px">check_circle</i>
-        <span id="thread_time" class="time mdui-text-color-theme-secondary"></span>
-    </div>
-    <div class="mdui-card mdui-card-shadow question">
+    <button class="back mdui-btn mdui-ripple"><i class="mdui-icon mdui-icon-left material-icons">arrow_back</i>返回</button>
+
+    <div class="mdui-card mdui-card-shadow question" style="margin-top: 5px;">
+        <h1 id="thread_title" class="mdui-text-color-theme" style="font-size: xx-large"><div class="mdui-spinner mdui-spinner-colorful"></div></h1>
+        <div class="thread_publisher">
+            <a id="thread_publisher_userName" class="user-popover-trigger mdui-text-color-theme-text"></a>
+            <i id="admin" class="mdui-icon material-icons" style="display: none;margin-bottom: 10px">check_circle</i>
+            <span id="thread_time" class="time mdui-text-color-theme-secondary"></span>
+        </div>
         <div id="thread_content"><div class="mdui-progress"><div class="mdui-progress-indeterminate"></div></div></div>
 
         <div class="mc-loading mdui-hidden">
@@ -46,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div class="mdui-card mdui-card-shadow ops" style="margin-top: 20px">
+    <div class="mdui-card ops" style="margin-top: 20px">
         <span id="like">
             <i id="icon_like" class="mdui-icon material-icons toolbar-icon">thumb_up</i>&nbsp;
             点赞
@@ -56,7 +58,7 @@
             评论
         </span>
     </div>
-    <div id="comments_box" class="mdui-card mdui-card-shadow question" style="margin-top: 20px">
+    <div id="comments_box" class="mdui-card question" style="margin-top: 20px">
         <div style="font-size: x-large;margin-top: 20px;margin-bottom: 20px">
             评论
         </div>
@@ -121,6 +123,7 @@
             $("#main").attr("href","../");
         }
     });
+
     function sendComment() {
         let params = {};
         params.sessionId = getCookie("sessionId");
@@ -251,6 +254,14 @@
             $("#comment").click(function () {
                 location.href = "#input_comment";
             });
+            $(".back").click(function () {
+                let link = THEME_URL + "board/?boardId=" + data["board"]["id"];
+                if(PSEUDO_STATIC_CONFIGURED){
+                    link = THEME_URL + "board/BID" + data["board"]["id"];
+                }
+                location.href = link;
+            });
+
         }, function (data) {
             $("#thread_title").text("加载失败");
             $("#thread_time").text("加载失败");
@@ -258,6 +269,7 @@
             $("#thread_publisher_userName").text("加载失败");
             mdui.snackbar(analysisError(data["error"]));
         });
+
         if(!isLogin()){
             $("#new_comment").hide()
         }

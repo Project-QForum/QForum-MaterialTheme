@@ -16,7 +16,7 @@
         </div>
         <a onclick="location.reload();" class="mdui-btn mdui-btn-icon"><i
                 class="mdui-icon material-icons">refresh</i></a>
-        <div id="account" class="mdui-chip" onclick="onAccountButtonClick();">
+        <div id="account" class="mdui-chip">
             <span class="mdui-chip-icon mdui-m-b-4"><i class="mdui-icon material-icons">account_circle</i></span>
             <span id="account_name" class="mdui-chip-title mdui-m-b-4">未登录</span>
         </div>
@@ -25,6 +25,9 @@
     </div>
     <script>
         $(document).ready(function () {
+            $("#account").click(function (){
+                onAccountButtonClick();
+            });
             if(isLogin()){
                 $("#account_name").text(getCookie("userName"));
 

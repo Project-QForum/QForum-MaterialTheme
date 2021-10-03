@@ -1,5 +1,5 @@
 BASE_URL = "http://localhost:8080/";
-THEME_URL = "https://beta.wearbbs.cn/"
+THEME_URL = "http://localhost:63342/QForum-MaterialTheme/"
 
 function sendGet(url,params,success,failure){
     $.get(BASE_URL + url + "?" + params, success).fail(failure);
