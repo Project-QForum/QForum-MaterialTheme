@@ -12,7 +12,7 @@ This theme needs to be used with [QForum-Core](https://github.com/JackuXL/QForum
 
 1. Install  [QForum-Core](https://github.com/JackuXL/QForum-Core).
 
-2. Modify BASE_URL in /js/util/NetWorkUtil_v1.js to the address where QForum-Core is installed, and THEME_URL to the address where this theme is installed.
+2. Modify BASE_URL in /js/util/NetWorkUtil_v2.js to the address where QForum-Core is installed, and THEME_URL to the address where this theme is installed.
 
 3. Optional content:
 

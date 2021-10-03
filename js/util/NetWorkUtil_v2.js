@@ -20,9 +20,9 @@ function setCookie(name,value)
 //读取cookies
 function getCookie(name)
 {
-    let arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-    arr = document.cookie.match(reg);
-    return unescape(arr[2])==="null"?null:unescape(arr[2]);
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr = document.cookie.match(reg)) return unescape(arr[2])==="null"?null:unescape(arr[2]);
+    else return null;
 }
 //删除cookies
 function delCookie(name)

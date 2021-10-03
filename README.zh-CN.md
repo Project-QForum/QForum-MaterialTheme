@@ -12,7 +12,7 @@ QForum-MaterialTheme 是 [QForum](https://github.com/JackuXL/QForum) 的官方�
 
 1. 安装  [QForum-Core](https://github.com/JackuXL/QForum-Core)。
 
-2. 修改 /js/util/NetWorkUtil_v1.js 中的 BASE_URL 为安装 QForum-Core 的地址，THEME_URL 为安装本主题的地址。
+2. 修改 /js/util/NetWorkUtil_v2.js 中的 BASE_URL 为安装 QForum-Core 的地址，THEME_URL 为安装本主题的地址。
 
 3. 可选内容：
 
