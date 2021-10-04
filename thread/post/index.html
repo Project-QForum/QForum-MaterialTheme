@@ -96,7 +96,7 @@
             postThread(params,function (data) {
                 location.href = "../?id="+data["id"]+"&msg=发布成功";
             },function (data) {
-                mdui.snackbar(analysisError(data["error"]));
+                mdui.snackbar(analysisError(data["responseJSON"]["error"]));
             });
         }
 

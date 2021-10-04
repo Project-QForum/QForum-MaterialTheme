@@ -83,6 +83,7 @@ function before_time(dateTimeStamp) {
 }
 
 function analysisError(error){
+    console.log(error);
     switch (error){
         case "username_already_exists":
             return "用户名已存在";

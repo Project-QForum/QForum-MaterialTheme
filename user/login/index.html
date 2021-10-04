@@ -100,6 +100,7 @@
                     setCookie("uid",profile["id"]);
                     setCookie("sessionId",profile["sessionId"]);
                     setCookie("userName",profile["userName"]);
+                    setCookie("avatarUrl",profile["avatarUrl"]);
                     location.href = "../../?msg=登录成功";
                 }
                 else{
@@ -108,7 +109,7 @@
 
 
             },function (data) {
-                mdui.snackbar(analysisError(data["error"]));
+                mdui.snackbar(analysisError(data["responseJSON"]["error"]));
             });
 
         });

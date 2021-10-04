@@ -111,7 +111,7 @@
 <script>
     $("#appbar").load("../../common/appbar.html", function (responseTxt, statusTxt) {
         if (statusTxt === "success") {
-            $("#title").text("帖子");
+            $("#title").text("应用");
         }
     });
     $("#drawer").load("../../common/drawer.html", function (responseTxt, statusTxt) {
@@ -168,7 +168,7 @@
             $("#app_time").text("加载失败");
             $("#app_content").html("加载失败");
             $("#app_publisher_userName").text("加载失败");
-            mdui.snackbar(analysisError(data["error"]));
+            mdui.snackbar(analysisError(data["responseJSON"]["error"]));
         });
         if(!isLogin()){
             $("#new_comment").hide()

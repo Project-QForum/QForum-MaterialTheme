@@ -14,3 +14,9 @@
     border-radius: 8px;
     padding: 2%;
 }
+.avatar{
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    border-radius: 50px;
+}

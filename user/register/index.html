@@ -100,7 +100,7 @@
             register(params,function (){
                 location.href = "../login/?msg=注册成功";
             },function (data) {
-                mdui.snackbar(analysisError(data["error"]));
+                mdui.snackbar(analysisError(data["responseJSON"]["error"]));
             });
             return false;
         });

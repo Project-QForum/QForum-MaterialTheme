@@ -27,7 +27,7 @@
         <h1 id="thread_title" class="mdui-text-color-theme" style="font-size: xx-large"><div class="mdui-spinner mdui-spinner-colorful"></div></h1>
         <div class="thread_publisher">
             <a id="thread_publisher_userName" class="user-popover-trigger mdui-text-color-theme-text"></a>
-            <i id="admin" class="mdui-icon material-icons" style="display: none;margin-bottom: 10px">check_circle</i>
+            <i id="official" class="mdui-icon material-icons" style="display: none;margin-bottom: 10px">check_circle</i>
             <span id="thread_time" class="time mdui-text-color-theme-secondary"></span>
         </div>
         <div id="thread_content"><div class="mdui-progress"><div class="mdui-progress-indeterminate"></div></div></div>
@@ -136,7 +136,7 @@
             loadComment();
             location.href = "#reply" + data["comment"]["id"];
         },function (data) {
-            mdui.snackbar(analysisError(data["error"]));
+            mdui.snackbar(analysisError(data["responseJSON"]["error"]));
         });
     }
     function loadComment() {
@@ -145,7 +145,7 @@
         listComments("threadId="+tid,function (data) {
             let item = [
                 '<li id="reply%id%" class="mdui-list-item mdui-ripple">',
-                '<div class="mdui-list-item-avatar"><i class="mdui-icon material-icons">account_circle</i></div>',
+                '<div class="mdui-list-item-avatar"><img src="%avatarUrl%"></div>',
                 '<div class="mdui-list-item-content">',
                 '<div class="mdui-list-item-title">%title%</div>',
                 '<div class="mdui-list-item-text">%subtitle%</div>',
@@ -157,10 +157,15 @@
             }
             else{
                 for(let i = 0;i<data["size"];i++){
+                    let avatarUrl = "../img/defaultAvatar.png";
+                    if(data["commentList"][i]["publisher"]["avatarUrl"]!=null){
+                        avatarUrl = data["commentList"][i]["publisher"]["avatarUrl"];
+                    }
                     $("#comments").append(
                         item.replace("%title%",filterXSS(data["commentList"][i]["publisher"]["userName"]))
                             .replace("%subtitle%",filterXSS(data["commentList"][i]["content"]))
-                            .replace("%id%",filterXSS(data["commentList"][i]["id"])));
+                            .replace("%id%",filterXSS(data["commentList"][i]["id"]))
+                            .replace("%avatarUrl%",avatarUrl));
                     if(data["size"]-i!==1){
                         $("#comments").append('<li class="mdui-divider-inset mdui-m-y-0" style="list-style: none"></li>');
                     }
@@ -211,8 +216,14 @@
             $("#thread_time").text(before_time(data["postTime"]));
             $("#thread_content").html(filterXSS(data["content"]));
             $("#thread_publisher_userName").text(data["publisher"]["userName"]);
-            if(data["publisher"]["admin"]){
-                $("#admin").show();
+            let link = "../user/?userName=" + data["publisher"]["userName"];
+            if(PSEUDO_STATIC_CONFIGURED){
+                link = "../user/" + data["publisher"]["userName"];
+            }
+            $("#thread_publisher_userName").attr("href",link);
+
+            if(data["publisher"]["official"]!=null){
+                $("#official").show();
             }
 
             let likeList = JSON.parse(data["likeList"]);
@@ -267,7 +278,7 @@
             $("#thread_time").text("加载失败");
             $("#thread_content").html("加载失败");
             $("#thread_publisher_userName").text("加载失败");
-            mdui.snackbar(analysisError(data["error"]));
+            mdui.snackbar(analysisError(data["responseJSON"]["error"]));
         });
 
         if(!isLogin()){

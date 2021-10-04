@@ -18,6 +18,7 @@
     <!-- Title -->
     <title>用户中心 | QForum</title>
     <link rel="shortcut icon" href="../img/favicon.png">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="mdui-theme-primary-blue mdui-theme-accent-blue mdui-drawer-body-left mdui-appbar-with-toolbar">
 
@@ -26,80 +27,73 @@
 <div id="drawer"></div>
 <div class="mdui-container">
 
-<div class="mdui-card mdui-shadow-5">
+    <div class="mdui-card mdui-shadow-5">
 
-    <div class="mdui-card-media">
-      <img class="mdui-img-fluid mdui-img-rounded" src="../img/card.jpg"/>
-    </div>
-    
-    <div class="mdui-card-primary">
-      <div id="userName" class="mdui-card-primary-title">UserName</div>
-      <div id="email" class="mdui-card-primary-subtitle">UserInfo</div>
-      <!-- TODO——用户头衔等信息 -->
-      <div class="mdui-card-content">个人简介</div>
-    </div>
-  
-    <!-- TODO——文章列表 -->
-  
-    <div class="mdui-card-actions">
-      <button class="mdui-btn mdui-ripple">action 1</button>
-      <button class="mdui-btn mdui-ripple">action 2</button>
-      <button class="mdui-btn mdui-btn-icon mdui-float-right"><i class="mdui-icon material-icons">more_vert</i></button>
-    </div>
-  
-  </div>
-  <br>
-  <!-- 个人信息的显示&修改（登录身份为本人） -->
-  <div class="mdui-card mdui-shadow-5">
-    
-    <div class="mdui-card-primary">
+        <div class="mdui-card-media">
+            <img class="mdui-img-fluid mdui-img-rounded" src="../img/card.jpg"/>
+        </div>
 
-        <div class="mdui-card-primary-subtitle">个人设置</div>
-
-        <div class="mdui-panel" mdui-panel>
-
-            <div class="mdui-panel-item">
-              <div class="mdui-panel-item-header">First</div>
-              <div class="mdui-panel-item-body">
-                <p>First content</p>
-                <p>First content</p>
-                <p>First content</p>
-                <p>First content</p>
-                <p>First content</p>
-                <p>First content</p>
-              </div>
+        <div class="mdui-card-primary">
+            <div style="display: flex">
+            <img src="../img/defaultAvatar.png" class="avatar">
+            <div>
+            <div id="userName" class="mdui-card-primary-title">UserName</div>
+            <div id="email" class="mdui-card-primary-subtitle">UserInfo</div>
             </div>
-          
-            <div class="mdui-panel-item">
-              <div class="mdui-panel-item-header">Second</div>
-              <div class="mdui-panel-item-body">
-                <p>Second content</p>
-                <p>Second content</p>
-                <p>Second content</p>
-                <p>Second content</p>
-                <p>Second content</p>
-                <p>Second content</p>
-              </div>
             </div>
-          
-            <div class="mdui-panel-item">
-              <div class="mdui-panel-item-header">Third</div>
-              <div class="mdui-panel-item-body">
-                <p>Third content</p>
-                <p>Third content</p>
-                <p>Third content</p>
-                <p>Third content</p>
-                <p>Third content</p>
-                <p>Third content</p>
-              </div>
+            <div class="mdui-divider" style="margin: 10px 0"></div>
+            <div id="official" style="display: none;margin-bottom: 5px">
+                <i id="icon_official" class="mdui-icon material-icons" style="margin-bottom: 5px;font-size: 20px">check_circle</i>
+                <a id="text_official" class="user-popover-trigger mdui-text-color-theme-text"
+                   style="margin-bottom: 20px;margin-top: 10px;font-size: 15px;"></a>
             </div>
-          
-          </div>    </div>
-  
-  
-  </div>
+            <div id="introduction">
+                <i id="icon_introduction" class="mdui-icon material-icons" style="margin-bottom: 5px;font-size: 20px">face</i>
+                <a id="text_introduction" class="user-popover-trigger mdui-text-color-theme-text"
+                   style="margin-bottom: 20px;margin-top: 10px;font-size: 15px;"></a>
+            </div>
+        </div>
+
+        <!-- TODO——文章列表 -->
+
+        <div id="actions" class="mdui-card-actions" style="display: none">
+            <button id="change_password" class="mdui-btn mdui-ripple">修改密码</button>
+            <button id="change_introduction" class="mdui-btn mdui-ripple">修改简介</button>
+            <button id="change_avatar" class="mdui-btn mdui-ripple">修改头像</button>
+            <button class="mdui-btn mdui-btn-icon mdui-float-right"><i class="mdui-icon material-icons">more_vert</i>
+            </button>
+        </div>
+
+    </div>
+    <br>
 </div>
-  <!-- MDUI JavaScript -->
+<div id="dialog_change_password" class="mdui-dialog">
+    <div class="mdui-dialog-content">
+        <div class="mdui-textfield">
+            <label class="mdui-textfield-label">旧密码</label>
+            <input id="old_password" class="mdui-textfield-input" type="password"/>
+        </div>
+        <div class="mdui-textfield">
+            <label class="mdui-textfield-label">新密码</label>
+            <input id="new_password" class="mdui-textfield-input" type="password"/>
+        </div>
+    </div>
+    <div class="mdui-dialog-actions">
+        <button id="password_cancel" class="mdui-btn mdui-ripple">取消</button>
+        <button id="password_save" class="mdui-btn mdui-ripple">保存</button>
+    </div>
+</div>
+<div id="dialog_change_avatar" class="mdui-dialog">
+    <div class="mdui-dialog-content">
+        <input id="upload_avatar" type="file" accept="image/*">
+
+    </div>
+    <div class="mdui-dialog-actions">
+        <button id="avatar_cancel" class="mdui-btn mdui-ripple">取消</button>
+        <button id="avatar_save" class="mdui-btn mdui-ripple" disabled>保存</button>
+    </div>
+</div>
+<!-- MDUI JavaScript -->
 <script
         src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
         integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
@@ -107,7 +101,9 @@
 ></script>
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script src="../js/util/NetWorkUtil_v2.js"></script>
+<script src="../js/util/XSSUtil_v1.js"></script>
 <script src="../js/App_v1.js"></script>
+<script src="../js/util/MD5Util_v1.js"></script>
 <script src="../js/api/UserApi_v1.js"></script>
 <script>
     $("#appbar").load("../common/appbar.html", function (responseTxt, statusTxt) {
@@ -117,22 +113,155 @@
     });
     $("#drawer").load("../common/drawer.html", function (responseTxt, statusTxt) {
         if (statusTxt === "success") {
-            $("#main").attr("href","../");
+            $("#main").attr("href", "../");
         }
     });
     $(function () {
         let msg = getQueryStringByName("msg");
-        if(msg){
+        if (msg) {
             mdui.snackbar(msg);
         }
-        let uid = getCookie("uid");
-        if(!PSEUDO_STATIC_CONFIGURED){
-            if(getQueryStringByName("uid")!==""){
-                uid = getQueryStringByName("uid");
+        let editable = true;
+        let param = "";
+        if (!PSEUDO_STATIC_CONFIGURED) {
+            if (!["", getCookie("uid")].includes(getQueryStringByName("uid"))) {
+                // 如果传了 UID
+                param = "id=" + getQueryStringByName("uid");
+                editable = false;
+            }
+            else{
+                // 没传 UID
+                if(!["", getCookie("userName")].includes(getQueryStringByName("userName"))){
+                    // 传了用户名
+                    param = "userName=" + getQueryStringByName("userName");
+                    editable = false;
+                }
+                else{
+                    param = "id=" + getCookie("uid");
+                }
             }
         }
-        getProfile(uid,function (data) {
-            $("#userName").text(data["profile"]["userName"]);
+
+        if (editable) {
+            $("#actions").show();
+
+            let dialog_change_password = new mdui.Dialog("#dialog_change_password");
+                $("#change_password").click(()=>{
+                    dialog_change_password.open();
+                });
+                $("#password_save").click(()=>{
+                    let params = {};
+                    params.sessionId = getCookie("sessionId")
+                    params.oldPassword = $.md5($("#old_password").val());
+                    params.newPassword = $.md5($("#new_password").val());
+                    params.md5 = true;
+                    params = $.param(params);
+                    setPassword(params,()=>{
+                        mdui.snackbar("修改成功");
+                        dialog_change_password.close();
+                    },(error)=>{
+                        mdui.snackbar(analysisError(error["responseJSON"]["error"]));
+                    });
+                });
+                $("#password_cancel").click(()=>{
+                    dialog_change_password.close();
+                });
+
+            let dialog_change_avatar = new mdui.Dialog("#dialog_change_avatar");
+                $("#change_avatar").click(()=>{
+                    dialog_change_avatar.open();
+                });
+                $("#upload_avatar").change(function () {
+                    if($(this).val() !== ""){
+                        $("#avatar_save").attr("disabled",false);
+                        $("#avatar_save").click(()=>{
+                            const formData = new FormData();
+                            const name = $(this).val();
+                            const files = $(this)[0].files[0];
+                            formData.append("editormd-image-file", files);
+                            $.ajax({
+                                url: BASE_URL + "image/upload",
+                                type: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: (data) => {
+                                    if(data["success"]===1){
+                                        mdui.snackbar("上传成功，正在设置头像...");
+                                        setAvatarUrl("sessionId="+getCookie("sessionId")+"&newAvatarUrl="+data["url"], ()=>{
+                                            mdui.snackbar("设置头像成功");
+                                            setCookie("avatarUrl",data["url"]);
+                                            setTimeout("location.reload()", 3000);
+                                        },(_data)=>{
+                                            mdui.snackbar("设置头像失败，"+analysisError(_data["responseJSON"]["error"]));
+                                        });
+
+                                    }
+                                    else{
+                                        mdui.snackbar("上传失败");
+                                        console.log(data);
+                                    }
+                                },
+                                error: (error)=>{
+                                    mdui.snackbar("上传失败");
+                                    console.log(error);
+                                }
+                            });
+                        });
+                    }
+                });
+                $("#avatar_cancel").click(()=>{
+                    dialog_change_avatar.close();
+                });
+        }
+        getProfile(param, function (data) {
+            let tmp = filterXSS(data["profile"]["userName"])
+            if (editable) {
+                tmp += "<button id='edit_username' class=\"mdui-btn mdui-btn-icon\" mdui-tooltip=\"{content: '修改'}\"><i class=\"mdui-icon material-icons\">edit</i></button>"
+            }
+            $("#userName").html(tmp);
+            if(data["profile"]["avatarUrl"]!=null){
+                $(".avatar").attr("src",data["profile"]["avatarUrl"]);
+            }
+            if(editable){
+                $("#edit_username").click(() => {
+                    mdui.prompt("新用户名", (value) => {
+                        setUserName("sessionId=" + getCookie("sessionId") + "&newName=" + value, () => {
+                            mdui.snackbar("修改成功");
+                            setCookie("userName", value);
+                            setTimeout("location.reload()", 3000);
+                        }, (data) => {
+                            mdui.snackbar(analysisError(data["responseJSON"]["error"]));
+                        });
+                    }, () => {
+                    }, {
+                        confirmText: '保存',
+                        cancelText: '取消',
+                        defaultValue:data["profile"]["userName"]
+                    });
+                });
+                $("#change_introduction").click(()=>{
+                    mdui.prompt("简介", (value) => {
+                        setIntroduction("sessionId=" + getCookie("sessionId") + "&newIntroduction=" + value, () => {
+                            mdui.snackbar("修改成功");
+                            setTimeout("location.reload()", 3000);
+                        }, (data) => {
+                            mdui.snackbar(analysisError(data["responseJSON"]["error"]));
+                        });
+                    }, () => {
+                    }, {
+                        confirmText: '保存',
+                        cancelText: '取消',
+                        defaultValue:data["profile"]["introduction"],
+                        type:"textarea"
+                    });
+                });
+            }
+            $("#text_introduction").text(data["profile"]["introduction"]);
+            if(data["profile"]["official"]!=null){
+                $("#official").show();
+                $("#text_official").text(data["profile"]["official"]);
+            }
             $("#email").text(data["profile"]["email"]);
         });
     });
