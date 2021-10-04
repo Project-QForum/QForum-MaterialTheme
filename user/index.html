@@ -220,8 +220,11 @@
                 tmp += "<button id='edit_username' class=\"mdui-btn mdui-btn-icon\" mdui-tooltip=\"{content: '修改'}\"><i class=\"mdui-icon material-icons\">edit</i></button>"
             }
             $("#userName").html(tmp);
-            if(data["profile"]["avatarUrl"]!=null){
+            if(![null,""].includes(data["profile"]["avatarUrl"])){
                 $(".avatar").attr("src",data["profile"]["avatarUrl"]);
+            }
+            if(data["profile"]["introduction"]===""){
+                data["profile"]["introduction"] = "这个人很懒，什么都没留下。"
             }
             if(editable){
                 $("#edit_username").click(() => {

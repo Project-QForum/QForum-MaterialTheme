@@ -59,15 +59,15 @@
                     </div></td>
                 </tr>
                 <tr>
-                    <td>图标地址</td>
+                    <td>图标</td>
                     <td><div class="mdui-textfield">
-                        <input id="iconUrl" class="mdui-textfield-input" type="url" placeholder="图标地址"/>
+                        <input id="icon" type="file" accept="image/*">
                     </div></td>
                 </tr>
                 <tr>
-                    <td>下载地址</td>
+                    <td>安装包</td>
                     <td><div class="mdui-textfield">
-                        <input id="downloadUrl" class="mdui-textfield-input" type="url" placeholder="下载地址"/>
+                        <input id="apk" type="file" accept="application/vnd.android.package-archive">
                     </div></td>
                 </tr>
 
@@ -96,6 +96,7 @@
     <script src="../../editor.md/editormd.min.js"></script>
     <script>
         let editor;
+        let apkUrl = "",iconUrl = "";
         if(getCookie("sessionId")==null){
             location.href = "../../";
         }
@@ -144,18 +145,81 @@
                 }
                 mdui.mutation();
             });
+            $("#icon").change(function () {
+                if($(this).val() !== ""){
+                    const formData = new FormData();
+                    const name = $(this).val();
+                    const files = $(this)[0].files[0];
+                    formData.append("editormd-image-file", files);
+                    $.ajax({
+                        url: BASE_URL + "image/upload",
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: (data) => {
+                            if(data["success"]===1){
+                                mdui.snackbar("上传成功");
+                                iconUrl = data["url"];
+                            }
+                            else{
+                                mdui.snackbar("上传失败");
+                                console.log(data);
+                            }
+                        },
+                        error: (error)=>{
+                            mdui.snackbar("上传失败");
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+            $("#apk").change(function () {
+                if($(this).val() !== ""){
+                    const formData = new FormData();
+                    const name = $(this).val();
+                    const files = $(this)[0].files[0];
+                    formData.append("file", files);
+                    $.ajax({
+                        url: BASE_URL + "apk/upload",
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: (data) => {
+                            if(data["success"]===1){
+                                mdui.snackbar("上传成功");
+                                apkUrl = data["url"];
+                            }
+                            else{
+                                mdui.snackbar("上传失败");
+                                console.log(data);
+                            }
+                        },
+                        error: (error)=>{
+                            mdui.snackbar("上传失败");
+                            console.log(error);
+                        }
+                    });
+                }
+            });
         });
         function submit(){
+            if([apkUrl,iconUrl].includes("")){
+                mdui.snackbar("请确保表单完整");
+                return;
+            }
             let params = {};
             params.sessionId = getCookie("sessionId");
             params.name = $("#appName").val();
-            params.downloadUrl = $("#downloadUrl").val();
-            params.iconUrl = $("#iconUrl").val();
+            params.downloadUrl = apkUrl;
+            params.iconUrl = iconUrl;
             params.version = $("#version").val();
             params.slogan = $("#slogan").val();
             params.packageName = $("#packageName").val();
             params.description = editor.getHTML();
             params = $.param(params);
+
             postApp(params,function (data) {
                 location.href = "../detail/?packageName="+data["packageName"]+"&msg=发布成功";
             },function (data) {
