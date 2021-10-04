@@ -110,7 +110,7 @@
 <script src="../js/util/NetWorkUtil_v2.js"></script>
 <script src="../js/api/ThreadApi_v1.js"></script>
 <script src="../js/api/CommentApi_v1.js"></script>
-<script src="../js/App_v1.js"></script>
+<script src="../js/App_v2.js"></script>
 
 <script>
     $("#appbar").load("../../common/appbar.html", function (responseTxt, statusTxt) {
@@ -158,7 +158,7 @@
             else{
                 for(let i = 0;i<data["size"];i++){
                     let avatarUrl = "../img/defaultAvatar.png";
-                    if(data["commentList"][i]["publisher"]["avatarUrl"]!=null){
+                    if(![null,""].includes(data["commentList"][i]["publisher"]["avatarUrl"])){
                         avatarUrl = data["commentList"][i]["publisher"]["avatarUrl"];
                     }
                     $("#comments").append(

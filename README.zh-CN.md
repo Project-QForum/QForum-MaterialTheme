@@ -18,7 +18,7 @@ QForum-MaterialTheme 是 [QForum](https://github.com/JackuXL/QForum) 的官方�
 
    - 修改 /common/appbar.html 中论坛名称
 
-   - 添加伪静态（实现 /thread/TIDXXX 和 /board/BIDXXX），并修改 /js/App_v1.js 中的 PSEUDO_STATIC_CONFIGURED 为 true
+   - 添加伪静态（实现 /thread/TIDXXX 和 /board/BIDXXX），并修改 /js/App_v2.js 中的 PSEUDO_STATIC_CONFIGURED 为 true
 
      ```nginx
      # Nginx

@@ -102,7 +102,7 @@
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script src="../js/util/NetWorkUtil_v2.js"></script>
 <script src="../js/util/XSSUtil_v1.js"></script>
-<script src="../js/App_v1.js"></script>
+<script src="../js/App_v2.js"></script>
 <script src="../js/util/MD5Util_v1.js"></script>
 <script src="../js/api/UserApi_v2.js"></script>
 <script>
@@ -258,7 +258,7 @@
                 });
             }
             $("#text_introduction").text(data["profile"]["introduction"]);
-            if(data["profile"]["official"]!=null){
+            if(![null,""].includes(data["profile"]["official"])){
                 $("#official").show();
                 $("#text_official").text(data["profile"]["official"]);
             }

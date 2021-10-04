@@ -30,7 +30,7 @@
             });
             if(isLogin()){
                 $("#account_name").text(getCookie("userName"));
-                if(getCookie("avatarUrl")!=null){
+                if(![null,""].includes(getCookie("avatarUrl"))){
                     $("#chip-avatar").attr("src",getCookie("avatarUrl"));
                 }
             }

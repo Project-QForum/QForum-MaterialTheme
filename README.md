@@ -18,7 +18,7 @@ This theme needs to be used with [QForum-Core](https://github.com/JackuXL/QForum
 
    - Modify the forum name in /common/appbar.html
 
-   - Add pseudo-static (implement /thread/TIDXXX and /board/BIDXXX),and modify PSEUDO_STATIC_CONFIGURED in /js/App_v1.js to true
+   - Add pseudo-static (implement /thread/TIDXXX and /board/BIDXXX),and modify PSEUDO_STATIC_CONFIGURED in /js/App_v2.js to true
 
      ```nginx
      # Nginx
